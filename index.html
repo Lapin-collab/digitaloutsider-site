@@ -1,0 +1,833 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GameCopilot — Features</title>
+<style>
+  /* ===== Tokens: exact palettes from gamecopilot/theme.py ===== */
+  :root {
+    --bg: #F4F5F8;
+    --surface: #FFFFFF;
+    --text: #1B1D24;
+    --secondary: #6A7080;
+    --accent: #3366FF;
+    --accent-text: #FFFFFF;
+    --border: #DDE1E9;
+    --shadow: 0 8px 30px rgba(27, 29, 36, 0.10);
+    --font: "Segoe UI", Inter, system-ui, sans-serif;
+    --mono: "Cascadia Code", Consolas, ui-monospace, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #15171E;
+      --surface: #1E212B;
+      --text: #E6E8EE;
+      --secondary: #9AA0AE;
+      --accent: #5B8CFF;
+      --accent-text: #FFFFFF;
+      --border: #2C303C;
+      --shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #F4F5F8; --surface: #FFFFFF; --text: #1B1D24; --secondary: #6A7080;
+    --accent: #3366FF; --accent-text: #FFFFFF; --border: #DDE1E9;
+    --shadow: 0 8px 30px rgba(27, 29, 36, 0.10);
+  }
+  :root[data-theme="dark"] {
+    --bg: #15171E; --surface: #1E212B; --text: #E6E8EE; --secondary: #9AA0AE;
+    --accent: #5B8CFF; --accent-text: #FFFFFF; --border: #2C303C;
+    --shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  /* ===== Language switching ===== */
+  [data-lang="ru"] .en { display: none !important; }
+  [data-lang="en"] .ru { display: none !important; }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+
+  /* ===== Top bar, styled like the overlay control bar ===== */
+  .topbar {
+    position: sticky; top: 0; z-index: 40;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+  .topbar-inner {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 0;
+  }
+  .logo-mark {
+    width: 34px; height: 34px; border-radius: 8px;
+    background: var(--accent); color: var(--accent-text);
+    display: grid; place-items: center;
+    font-weight: 700; font-size: 15px; letter-spacing: 0.02em;
+    flex: none;
+  }
+  .logo-name { font-weight: 600; font-size: 17px; }
+  .ver-pill {
+    font-family: var(--mono); font-size: 12px;
+    color: var(--secondary);
+    border: 1px solid var(--border); border-radius: 999px;
+    padding: 2px 9px;
+  }
+  .topbar-spacer { flex: 1; }
+  .lang-toggle {
+    display: flex; border: 1px solid var(--border); border-radius: 8px;
+    overflow: hidden; background: var(--surface);
+  }
+  .lang-toggle button {
+    font-family: var(--font); font-size: 13px; font-weight: 600;
+    background: transparent; color: var(--secondary);
+    border: none; padding: 6px 14px; cursor: pointer;
+  }
+  .lang-toggle button.on { background: var(--accent); color: var(--accent-text); }
+  .buy-btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: var(--accent); color: var(--accent-text);
+    border: none; border-radius: 8px;
+    padding: 7px 16px; font-size: 13.5px; font-weight: 600;
+    text-decoration: none; cursor: pointer; white-space: nowrap;
+  }
+  .buy-btn:hover { filter: brightness(1.08); }
+  .buy-btn.big { font-size: 16px; padding: 11px 26px; border-radius: 9px; }
+
+  /* ===== Bottom CTA ===== */
+  .cta-block {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 34px 28px;
+    display: flex; flex-direction: column; align-items: center;
+    gap: 14px; text-align: center; margin-top: 10px;
+  }
+  .cta-block h2 {
+    margin: 0; font-size: clamp(21px, 3vw, 27px);
+    font-weight: 700; letter-spacing: -0.01em; text-wrap: balance;
+  }
+  .cta-block p { margin: 0; color: var(--secondary); font-size: 15px; max-width: 52ch; }
+  .lang-toggle button:focus-visible,
+  button:focus-visible, a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+
+  /* ===== Hero ===== */
+  .hero {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 44px; align-items: center;
+    padding: 56px 0 40px;
+  }
+  .hero h1 {
+    font-size: clamp(30px, 4.4vw, 44px);
+    line-height: 1.12; font-weight: 700;
+    letter-spacing: -0.015em;
+    margin: 0 0 16px; text-wrap: balance;
+  }
+  .hero h1 .hl { color: var(--accent); }
+  .hero .lead {
+    color: var(--secondary); font-size: 17px;
+    margin: 0 0 22px; max-width: 46ch;
+  }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    font-size: 13px; font-weight: 600;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 999px; padding: 5px 12px;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .chip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+  .hero-hint {
+    margin-top: 18px; font-size: 13px; color: var(--secondary);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .hero-hint .arrow { color: var(--accent); font-size: 16px; }
+
+  /* ===== The overlay mock ===== */
+  .mock-scene { position: relative; min-height: 380px; }
+  .mock-window {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: opacity 0.25s ease;
+    user-select: none;
+  }
+  .mock-window.ghost { opacity: 0.35; }
+  .mock-window.hidden-away { display: none; }
+  .mock-bar {
+    display: flex; align-items: center; gap: 2px;
+    padding: 7px 9px;
+    border-bottom: 1px solid var(--border);
+  }
+  .mock-bar .drag { color: var(--secondary); padding: 0 5px; cursor: grab; font-size: 14px; }
+  .mock-bar .game-name { font-size: 13px; font-weight: 600; margin-right: auto; padding: 0 4px; white-space: nowrap; }
+  .bar-btn {
+    font-family: var(--font); font-size: 14px; line-height: 1;
+    background: transparent; color: var(--text);
+    border: none; border-radius: 8px;
+    padding: 6px 7px; cursor: pointer;
+  }
+  .bar-btn:hover { background: var(--surface); }
+  .bar-btn.checked { background: var(--accent); color: var(--accent-text); }
+  .mock-body { padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+  .mock-window.collapsed .mock-body { display: none; }
+
+  .bubble-user {
+    align-self: flex-end; max-width: 82%;
+    background: var(--accent); color: var(--accent-text);
+    border-radius: 10px; padding: 8px 10px; font-size: 14px;
+  }
+  .bubble-assistant {
+    align-self: flex-start; max-width: 92%;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 8px 10px; font-size: 14px;
+    min-height: 58px;
+  }
+  .bubble-assistant .caret {
+    display: inline-block; width: 7px; height: 14px;
+    background: var(--accent); vertical-align: text-bottom;
+    animation: blink 0.9s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+  .mock-sources {
+    font-size: 12px; color: var(--secondary);
+  }
+  .mock-sources b { color: var(--accent); font-weight: 600; }
+  .mock-rag {
+    font-size: 12px; color: var(--secondary); font-family: var(--mono);
+  }
+  .mock-panel {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 9px 11px; font-size: 13px;
+  }
+  .mock-panel .p-title { font-weight: 600; font-size: 12px; color: var(--secondary); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+  .mock-panel.hide { display: none; }
+  .mock-journal-entry { display: flex; gap: 9px; align-items: flex-start; }
+  .mock-thumb {
+    width: 52px; height: 34px; flex: none; border-radius: 5px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--border) 100%);
+    opacity: 0.75;
+  }
+  .mock-composer {
+    display: flex; align-items: center; gap: 6px;
+  }
+  .mock-input {
+    flex: 1; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 7px 10px; font-size: 13px; color: var(--secondary);
+    white-space: nowrap; overflow: hidden;
+  }
+  .send-btn {
+    font-family: var(--font);
+    background: var(--accent); color: var(--accent-text);
+    border: none; border-radius: 8px; padding: 7px 14px;
+    font-size: 13px; font-weight: 600; cursor: pointer;
+  }
+  .send-btn:hover { filter: brightness(1.08); }
+
+  .mock-tray {
+    display: none;
+    align-items: center; gap: 12px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 16px;
+    box-shadow: var(--shadow);
+    font-size: 14px;
+  }
+  .mock-tray.shown { display: flex; }
+  .tray-icon {
+    width: 30px; height: 30px; border-radius: 7px; flex: none;
+    background: var(--accent); color: var(--accent-text);
+    display: grid; place-items: center; font-size: 14px; cursor: pointer;
+    animation: tray-pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes tray-pulse { 50% { transform: scale(1.12); } }
+  .mock-caption {
+    margin-top: 10px; text-align: center;
+    font-size: 12.5px; color: var(--secondary);
+  }
+  .replay-link {
+    background: none; border: none; padding: 0;
+    color: var(--accent); font: inherit; cursor: pointer;
+  }
+
+  /* ===== Pipeline ===== */
+  .section { padding: 34px 0; }
+  .section-head { margin-bottom: 22px; }
+  .eyebrow {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.09em;
+    text-transform: uppercase; color: var(--accent); margin: 0 0 6px;
+  }
+  .section-head h2 {
+    font-size: clamp(22px, 3vw, 30px); font-weight: 700;
+    letter-spacing: -0.01em; margin: 0; text-wrap: balance;
+  }
+  .section-head p.sub { color: var(--secondary); margin: 8px 0 0; max-width: 62ch; }
+
+  .pipeline {
+    display: flex; align-items: stretch; gap: 0;
+    overflow-x: auto; padding-bottom: 6px;
+  }
+  .pipe-step {
+    flex: 1 1 0; min-width: 150px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 13px 14px;
+  }
+  .pipe-step .icon { font-size: 19px; margin-bottom: 6px; }
+  .pipe-step .t { font-weight: 600; font-size: 14px; margin-bottom: 3px; }
+  .pipe-step .d { font-size: 12.5px; color: var(--secondary); line-height: 1.45; }
+  .pipe-arrow {
+    flex: none; align-self: center; padding: 0 7px;
+    color: var(--accent); font-size: 17px; font-weight: 700;
+  }
+
+  /* ===== Stats ===== */
+  .stats {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+  }
+  .stat {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 18px;
+  }
+  .stat .num {
+    font-size: 26px; font-weight: 700; letter-spacing: -0.01em;
+    color: var(--accent); font-variant-numeric: tabular-nums;
+    line-height: 1.15;
+  }
+  .stat .cap { font-size: 13px; color: var(--secondary); margin-top: 4px; line-height: 1.4; }
+
+  /* ===== Feature cards ===== */
+  .grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+  }
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 18px;
+    display: flex; flex-direction: column; gap: 9px;
+    scroll-margin-top: 80px;
+    transition: border-color 0.2s ease;
+  }
+  .card:hover { border-color: var(--accent); }
+  .card.flash { animation: flash-border 1.4s ease; }
+  @keyframes flash-border {
+    0%, 60% { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
+    100% { box-shadow: 0 0 0 0 transparent; }
+  }
+  .card .icon {
+    width: 38px; height: 38px; border-radius: 8px;
+    background: var(--bg); border: 1px solid var(--border);
+    display: grid; place-items: center; font-size: 18px;
+  }
+  .card h3 { margin: 0; font-size: 16.5px; font-weight: 600; letter-spacing: -0.005em; }
+  .card p { margin: 0; font-size: 14px; color: var(--secondary); }
+  .card details { margin-top: auto; }
+  .card summary {
+    cursor: pointer; font-size: 13px; font-weight: 600; color: var(--accent);
+    list-style: none; display: inline-flex; align-items: center; gap: 5px;
+  }
+  .card summary::-webkit-details-marker { display: none; }
+  .card summary::after { content: "▸"; font-size: 11px; transition: transform 0.15s; }
+  .card details[open] summary::after { transform: rotate(90deg); }
+  .card details .detail-body {
+    margin-top: 9px; font-size: 13px; color: var(--secondary);
+    border-top: 1px solid var(--border); padding-top: 9px;
+  }
+  .card details .detail-body ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 4px; }
+  kbd {
+    font-family: var(--mono); font-size: 12px;
+    background: var(--bg); border: 1px solid var(--border);
+    border-bottom-width: 2px; border-radius: 5px; padding: 1px 6px;
+    white-space: nowrap;
+  }
+  code {
+    font-family: var(--mono); font-size: 12.5px;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 5px; padding: 1px 5px;
+  }
+
+  /* ===== Footer ===== */
+  .footer {
+    border-top: 1px solid var(--border);
+    margin-top: 26px; padding: 26px 0 44px;
+    color: var(--secondary); font-size: 13.5px;
+  }
+  .footer .foot-grid { display: flex; flex-wrap: wrap; gap: 10px 26px; }
+  .footer b { color: var(--text); font-weight: 600; }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; gap: 30px; padding-top: 36px; }
+    .grid { grid-template-columns: repeat(2, 1fr); }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .grid { grid-template-columns: 1fr; }
+    .pipe-step { min-width: 132px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <div class="logo-mark" aria-hidden="true">GC</div>
+    <div class="logo-name">GameCopilot</div>
+    <div class="ver-pill">v0.5.4</div>
+    <div class="topbar-spacer"></div>
+    <!-- TODO: replace href with the itch.io page URL -->
+    <a class="buy-btn" href="#" data-buy-link>🛒 <span class="en">Buy</span></a>
+    
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div>
+      <h1>
+        
+        <span class="en">A game assistant that lives <span class="hl">on top of your game</span></span>
+      </h1>
+      <p class="lead">
+        
+        <span class="en">A compact overlay for Windows: ask a question — optionally with a screenshot — and a multimodal model via OpenRouter searches current wikis and guides, answers in your language, and remembers everything in per-game memory.</span>
+      </p>
+      <div class="chip-row">
+        <span class="chip"><span class="dot"></span><span class="en">Overlay above the game window</span></span>
+        <span class="chip"><span class="dot"></span><span class="en">Screenshots into chat</span></span>
+        <span class="chip"><span class="dot"></span><span class="en">Per-game RAG memory</span></span>
+        <span class="chip"><span class="dot"></span><span class="en">Web search with sources</span></span>
+      </div>
+      <p class="hero-hint">
+        <span class="arrow">→</span>
+        
+        <span class="en">The mock is live: try the bar buttons — <b>💬 🩻 📝 🧭 ✖</b></span>
+      </p>
+    </div>
+
+    <div class="mock-scene">
+      <div class="mock-window" id="mock">
+        <div class="mock-bar">
+          <span class="drag" aria-hidden="true">⠿</span>
+          <span class="game-name">Valheim</span>
+          <button class="bar-btn" id="mb-chat" type="button" title="Collapse chat">💬</button>
+          <button class="bar-btn" id="mb-ghost" type="button" title="Opacity">🩻</button>
+          <button class="bar-btn" data-target="card-search" type="button" title="Chats & search">🗂</button>
+          <button class="bar-btn" id="mb-notes" type="button" title="Notes">📝</button>
+          <button class="bar-btn" id="mb-journal" type="button" title="Progress journal">🧭</button>
+          <button class="bar-btn" data-target="card-prompts" type="button" title="Settings">⚙</button>
+          <button class="bar-btn" id="mb-close" type="button" title="Hide to tray">✖</button>
+        </div>
+        <div class="mock-body">
+          <div class="bubble-user">
+            
+            <span class="en">How do I kill the first boss?</span>
+          </div>
+          <div class="bubble-assistant"><span id="typed"></span><span class="caret" id="caret"></span></div>
+          <div class="mock-sources">
+            <span class="en">Sources: </span>
+            <b>valheim.fandom.com</b> · <b>game8.co</b>
+          </div>
+          <div class="mock-rag">RAG: 3 fragments (notes ×2, history ×1)</div>
+          <div class="mock-panel hide" id="panel-notes">
+            <div class="p-title"><span class="en">Notes — Valheim</span></div>
+            
+            <span class="en"><b>## Boss 1</b> — altar near the starting stones, needs 2 deer trophies. Bring the bow!</span>
+          </div>
+          <div class="mock-panel hide" id="panel-journal">
+            <div class="p-title"><span class="en">Progress journal</span></div>
+            <div class="mock-journal-entry">
+              <div class="mock-thumb" aria-hidden="true"></div>
+              <div>
+                
+                <span class="en">21:14 — Player at Eikthyr's altar; flint arrows and cooked meat in inventory.</span>
+              </div>
+            </div>
+          </div>
+          <div class="mock-composer">
+            <div class="mock-input" id="mock-placeholder">Message…</div>
+            <button class="bar-btn" type="button" title="Screenshot">📷</button>
+            <button class="bar-btn checked" type="button" title="RAG">🧠</button>
+            <button class="send-btn" type="button">Send</button>
+          </div>
+        </div>
+      </div>
+      <div class="mock-tray" id="tray">
+        <span class="tray-icon" id="tray-icon" role="button" tabindex="0" title="GameCopilot">GC</span>
+        <span>
+          
+          <span class="en">Overlay hidden to tray — the process keeps running. Click the icon to bring it back.</span>
+        </span>
+      </div>
+      <div class="mock-caption">
+        
+        <span class="en">Interactive overlay mock · </span>
+        <button class="replay-link" id="replay" type="button">
+          <span class="en">replay the answer ↺</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PIPELINE ============ -->
+  <section class="section">
+    <div class="section-head">
+      <p class="eyebrow"><span class="en">How it works</span></p>
+      <h2>
+        
+        <span class="en">Every answer makes the game smarter</span>
+      </h2>
+    </div>
+    <div class="pipeline">
+      <div class="pipe-step">
+        <div class="icon">💬</div>
+        <div class="t"><span class="en">Question + frame</span></div>
+        <div class="d"><span class="en">Text plus, optionally, a game-window or clipboard screenshot.</span></div>
+      </div>
+      <div class="pipe-arrow" aria-hidden="true">→</div>
+      <div class="pipe-step">
+        <div class="icon">🌐</div>
+        <div class="t">OpenRouter <code>:online</code></div>
+        <div class="d"><span class="en">A multimodal model searches current wikis, guides, and patch notes.</span></div>
+      </div>
+      <div class="pipe-arrow" aria-hidden="true">→</div>
+      <div class="pipe-step">
+        <div class="icon">✅</div>
+        <div class="t"><span class="en">Answer with sources</span></div>
+        <div class="d"><span class="en">Streaming, markdown, clickable source domains under the answer.</span></div>
+      </div>
+      <div class="pipe-arrow" aria-hidden="true">→</div>
+      <div class="pipe-step">
+        <div class="icon">🗄️</div>
+        <div class="t"><span class="en">History + index</span></div>
+        <div class="d"><span class="en">Everything lands in SQLite and gets indexed: FTS5 plus vector embeddings.</span></div>
+      </div>
+      <div class="pipe-arrow" aria-hidden="true">→</div>
+      <div class="pipe-step">
+        <div class="icon">🧠</div>
+        <div class="t">RAG</div>
+        <div class="d"><span class="en">Chats, notes, journal, and meta get mixed into your next questions.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STATS ============ -->
+  <section class="section">
+    <div class="stats">
+      <div class="stat">
+        <div class="num"><span class="en">100s</span></div>
+        <div class="cap"><span class="en">of models behind one OpenRouter key — Google, OpenAI, Anthropic, and more</span></div>
+      </div>
+      <div class="stat">
+        <div class="num">2</div>
+        <div class="cap"><span class="en">chat-search modes: instant full-text and semantic "by meaning"</span></div>
+      </div>
+      <div class="stat">
+        <div class="num">3</div>
+        <div class="cap"><span class="en">global hotkeys — control the overlay without leaving the game</span></div>
+      </div>
+      <div class="stat">
+        <div class="num">100%</div>
+        <div class="cap"><span class="en">of your data stays local: SQLite in %APPDATA%, the key in Windows Credential Manager</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FEATURES ============ -->
+  <section class="section">
+    <div class="section-head">
+      <p class="eyebrow"><span class="en">Features</span></p>
+      <h2><span class="en">Everything GameCopilot can do</span></h2>
+      <p class="sub">
+        
+        <span class="en">Twelve features as of v0.5.4 — from over-the-game chat to editable prompts. Cards expand.</span>
+      </p>
+    </div>
+
+    <div class="grid">
+      <div class="card" id="card-chat">
+        <div class="icon">💬</div>
+        <h3><span class="en">Chat above the game</span></h3>
+        <p><span class="en">Overlay for windowed and borderless games: streamed answers, markdown with tables and links, collapse-to-pill, two opacity levels.</span></p>
+        <details>
+          <summary><span class="en">Details</span></summary>
+          <div class="detail-body"><ul>
+            <li><span class="en">The window snaps to screen edges and center; position and size are remembered.</span></li>
+            <li><span class="en"><kbd>Esc</kbd> drops input focus — control instantly returns to the game.</span></li>
+            <li><span class="en">🔄 resets the conversation context while history stays in the database.</span></li>
+          </ul></div>
+        </details>
+      </div>
+
+      <div class="card" id="card-shots">
+        <div class="icon">📷</div>
+        <h3><span class="en">One-click screenshots</span></h3>
+        <p><span class="en">📷 instantly captures the game window; any clipboard screenshot (<kbd>PrtSc</kbd>, <kbd>Win+Shift+S</kbd>) becomes an attachment chip automatically.</span></p>
+        <details>
+          <summary><span class="en">Details</span></summary>
+          <div class="detail-body"><ul>
+            <li><span class="en">Message images persist; clicking a thumbnail opens a full-size viewer.</span></li>
+            <li><span class="en">The model sees the frame — ask "what's this item in my inventory?".</span></li>
+          </ul></div>
+        </details>
+      </div>
+
+      <div class="card" id="card-web">
+        <div class="icon">🌐</div>
+        <h3><span class="en">Web search with sources</span></h3>
+        <p><span class="en">OpenRouter's <code>:online</code> suffix feeds the model fresh wikis and guides; a row of clickable source domains sits under the answer — no raw URLs in the text.</span></p>
+        <details>
+          <summary><span class="en">Details</span></summary>
+          <div class="detail-body"><ul>
+            <li><span class="en">Works with any model — the knowledge cutoff stops mattering.</span></li>
+            <li><span class="en">Per game, you can set trusted source sites.</span></li>
+          </ul></div>
+        </details>
+      </div>
+
+      <div class="card" id="card-rag">
+        <div class="icon">🧠</div>
+        <h3><span class="en">RAG — per-game memory</span></h3>
+        <p><span class="en">The 🧠 button mixes your past chats, notes, progress journal, and game meta into the question. A footer shows exactly what went into context.</span></p>
+        <details>
+          <summary><span class="en">Details</span></summary>
+          <div class="detail-body"><ul>
+            <li><span class="en">For example: <code>RAG: 3 fragments (notes ×2, history ×1)</code>.</span></li>
+            <li><span class="en">The model is forbidden from inventing "facts from your notes" — if it's not in context, it says so.</span></li>
+            <li><span class="en">What participates is per-game: the <code>chats / notes / progress / meta</code> flags.</span></li>
+          </ul></div>
+        </details>
+      </div>
+
+      <div class="card" id="card-search">
+        <div class="icon">🔍</div>
+        <h3><span class="en">Search all history</span></h3>
+        <p><span class="en">Instant full-text search (FTS5) as you type — and a semantic mode: "how to kill the first boss" finds the Eikthyr conversation even without the word "boss".</span></p>
+        <details>
+          <summary><span class="en">Details</span></summary>
+          <div class="detail-body"><ul>
+            <li><span class="en">Clicking a result opens the chat, scrolls to the message, and flashes it.</span></li>
+            <li><span class="en">The relevance floor is configurable (29% by default).</span></li>
+          </ul></div>
+        </details>
+      </div>
+
+      <div class="card" id="card-notes">
+        <div class="icon">📝</div>
+        <h3><span class="en">Game notes</span></h3>
+        <p><span class="en">A markdown document per game right under the chat: click to edit, saving is automatic. Headings and paragraphs are indexed for RAG.</span></p>
+      </div>
+
+      <div class="card" id="card-journal">
+        <div class="icon">🧭</div>
+        <h3><span class="en">Progress journal & scanner</span></h3>
+        <p><span class="en">Every N minutes the scanner grabs a game frame; the model describes what's happening and maintains a progress summary. The assistant remembers where you've been.</span></p>
+        <details>
+          <summary><span class="en">Details</span></summary>
+          <div class="detail-body"><ul>
+            <li><span class="en">Each entry is a frame thumbnail, description, and timestamp; "Scan now" scans on demand.</span></li>
+            <li><span class="en">The journal keeps up to 200 entries per game (configurable); older ones are deleted with their images.</span></li>
+          </ul></div>
+        </details>
+      </div>
+
+      <div class="card" id="card-library">
+        <div class="icon">🗂</div>
+        <h3><span class="en">Games library & meta</span></h3>
+        <p><span class="en">The model researches the game online and builds its meta: genre, current patch, notable changes. Duplicate games merge into one entry with automatic reindexing.</span></p>
+        <details>
+          <summary><span class="en">Details</span></summary>
+          <div class="detail-body"><ul>
+            <li><span class="en">Meta improves the scanner and RAG; rebuild it any time.</span></li>
+            <li><span class="en">Other games' chats are browsable read-only — with a "View only" badge.</span></li>
+          </ul></div>
+        </details>
+      </div>
+
+      <div class="card" id="card-browser">
+        <div class="icon">🌍</div>
+        <h3><span class="en">Built-in browser</span></h3>
+        <p><span class="en">Links from answers, notes, and the journal open in a mini-browser above the overlay — no alt-tabbing out of the game. Closes with <kbd>Esc</kbd>.</span></p>
+      </div>
+
+      <div class="card" id="card-hotkeys">
+        <div class="icon">⌨️</div>
+        <h3><span class="en">Hotkeys, tray, background</span></h3>
+        <p><span class="en">Global hotkeys work even while the game has focus. A tray icon, single-instance process: relaunching the exe just shows the window.</span></p>
+        <details>
+          <summary><span class="en">Details</span></summary>
+          <div class="detail-body"><ul>
+            <li><kbd>Ctrl+-</kbd> — <span class="en">show/hide the overlay</span></li>
+            <li><kbd>Ctrl+=</kbd> — <span class="en">toggle opacity</span></li>
+            <li><kbd>Ctrl+0</kbd> — <span class="en">collapse/expand the chat</span></li>
+            <li><span class="en">On multi-monitor setups the overlay appears on the focused window's screen.</span></li>
+          </ul></div>
+        </details>
+      </div>
+
+      <div class="card" id="card-prompts">
+        <div class="icon">✍️</div>
+        <h3><span class="en">Prompts are just files</span></h3>
+        <p><span class="en">Every prompt is a plain text file in <code>%APPDATA%</code>. A custom communication style is one Notepad file: "answer like a strict esports coach".</span></p>
+        <details>
+          <summary><span class="en">Details</span></summary>
+          <div class="detail-body"><ul>
+            <li><span class="en">Built-in styles: minimal, beginner, pro, narrative — freely editable and deletable.</span></li>
+            <li><span class="en">A template error never crashes the app — the built-in text is used instead.</span></li>
+          </ul></div>
+        </details>
+      </div>
+
+      <div class="card" id="card-privacy">
+        <div class="icon">🔐</div>
+        <h3><span class="en">Your data stays yours</span></h3>
+        <p><span class="en">The API key lives only in Windows Credential Manager; chats, notes, and indexes sit in a local SQLite database (FTS5 + sqlite-vec) under <code>%APPDATA%</code>.</span></p>
+        <details>
+          <summary><span class="en">Details</span></summary>
+          <div class="detail-body"><ul>
+            <li><span class="en">Portable build: just copy the <code>dist\GameCopilot</code> folder and run it.</span></li>
+            <li><span class="en">Full reset — delete one folder in <code>%APPDATA%</code>.</span></li>
+          </ul></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BOTTOM CTA ============ -->
+  <section class="section">
+    <div class="cta-block">
+      <h2>
+        
+        <span class="en">Ready to play with an assistant at your shoulder?</span>
+      </h2>
+      <p>
+        
+        <span class="en">A portable Windows build — download, unzip, run. The only running cost is your own OpenRouter key: a typical question costs a fraction of a cent.</span>
+      </p>
+      <!-- TODO: replace href with the itch.io page URL -->
+      <a class="buy-btn big" href="#" data-buy-link>🛒 <span class="en">Buy on itch.io</span></a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="foot-grid">
+      <span><b>GameCopilot 0.5.4</b> · <span class="en">July 2026</span></span>
+      <span><span class="en">Windows 10/11 · windowed or borderless game mode</span></span>
+      <span><span class="en">All it needs is an</span> <b>OpenRouter</b> <span class="en">key and a multimodal model, e.g.</span> <code>google/gemini-2.5-flash</code></span>
+    </div>
+  </footer>
+</main>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  root.setAttribute('data-lang', 'en');
+
+  /* ---------- language toggle ---------- */
+  var btnRu = document.getElementById('btn-ru');
+  var btnEn = document.getElementById('btn-en');
+  function setLang(lang) {
+    root.setAttribute('data-lang', lang);
+    btnRu.classList.toggle('on', lang === 'ru');
+    btnEn.classList.toggle('on', lang === 'en');
+    document.title = lang === 'ru' ? 'GameCopilot — возможности' : 'GameCopilot — Features';
+    startTyping(); // retype the mock answer in the new language
+  }
+  if (btnRu && btnEn) { /* absent in the single-language exports */
+    btnRu.addEventListener('click', function () { setLang('ru'); });
+    btnEn.addEventListener('click', function () { setLang('en'); });
+  }
+
+  /* ---------- typed assistant answer ---------- */
+  var ANSWERS = {
+    ru: 'Первый босс — Эйктюр. Призовите его на алтаре, положив 2 трофея оленя. Уклоняйтесь перекатом от разряда молний и бейте после его прыжка. Кремнёвые стрелы сильно упрощают бой.',
+    en: 'The first boss is Eikthyr. Summon him at the altar with 2 deer trophies. Roll away from his lightning burst and strike right after his leap. Flint arrows make the fight much easier.'
+  };
+  var typedEl = document.getElementById('typed');
+  var caretEl = document.getElementById('caret');
+  var typeTimer = null;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function startTyping() {
+    var text = ANSWERS[root.getAttribute('data-lang')] || ANSWERS.ru;
+    if (typeTimer) { clearInterval(typeTimer); typeTimer = null; }
+    if (reduced) { typedEl.textContent = text; caretEl.style.display = 'none'; return; }
+    typedEl.textContent = '';
+    caretEl.style.display = 'inline-block';
+    var i = 0;
+    typeTimer = setInterval(function () {
+      i += 2;
+      typedEl.textContent = text.slice(0, i);
+      if (i >= text.length) {
+        clearInterval(typeTimer); typeTimer = null;
+        caretEl.style.display = 'none';
+      }
+    }, 24);
+  }
+  document.getElementById('replay').addEventListener('click', startTyping);
+
+  /* ---------- mock overlay interactions ---------- */
+  var mock = document.getElementById('mock');
+  var tray = document.getElementById('tray');
+
+  function toggle(btnId, fn) {
+    var b = document.getElementById(btnId);
+    b.addEventListener('click', function () {
+      var on = b.classList.toggle('checked');
+      fn(on);
+    });
+  }
+  toggle('mb-chat', function (on) { mock.classList.toggle('collapsed', on); });
+  toggle('mb-ghost', function (on) { mock.classList.toggle('ghost', on); });
+  toggle('mb-notes', function (on) {
+    document.getElementById('panel-notes').classList.toggle('hide', !on);
+  });
+  toggle('mb-journal', function (on) {
+    document.getElementById('panel-journal').classList.toggle('hide', !on);
+  });
+
+  document.getElementById('mb-close').addEventListener('click', function () {
+    mock.classList.add('hidden-away');
+    tray.classList.add('shown');
+  });
+  function restore() {
+    mock.classList.remove('hidden-away');
+    tray.classList.remove('shown');
+  }
+  var trayIcon = document.getElementById('tray-icon');
+  trayIcon.addEventListener('click', restore);
+  trayIcon.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); restore(); }
+  });
+
+  /* bar buttons that jump to a feature card and flash it, like the app
+     flashes a matched message after search */
+  document.querySelectorAll('.bar-btn[data-target]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var card = document.getElementById(b.getAttribute('data-target'));
+      if (!card) return;
+      card.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
+      card.classList.remove('flash');
+      void card.offsetWidth; /* restart the animation */
+      card.classList.add('flash');
+    });
+  });
+
+  startTyping();
+})();
+</script>
+</body>
+</html>
