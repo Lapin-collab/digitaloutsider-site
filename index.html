@@ -96,12 +96,11 @@
     display: flex; align-items: center; gap: 10px;
     padding: 10px 0;
   }
-  .logo-mark {
-    width: 34px; height: 34px; border-radius: 8px;
-    background: var(--accent); color: var(--accent-text);
-    display: grid; place-items: center;
-    font-weight: 700; font-size: 15px; letter-spacing: 0.02em;
-    flex: none;
+  .logo-mark { width: 34px; height: 34px; flex: none; }
+  .logo-mark.logo-dark { display: none; }
+  @media (prefers-color-scheme: dark) {
+    .logo-mark.logo-light { display: none; }
+    .logo-mark.logo-dark { display: block; }
   }
   .logo-name { font-weight: 600; font-size: 17px; }
   .ver-pill {
@@ -416,7 +415,8 @@
 
 <header class="topbar">
   <div class="wrap topbar-inner">
-    <div class="logo-mark" aria-hidden="true">GC</div>
+    <img class="logo-mark logo-light" src="logo-light.png" alt="" width="34" height="34">
+    <img class="logo-mark logo-dark" src="logo-dark.png" alt="" width="34" height="34">
     <div class="logo-name">GameCopilot</div>
     <div class="ver-pill">v0.5.6</div>
     <div class="topbar-spacer"></div>
