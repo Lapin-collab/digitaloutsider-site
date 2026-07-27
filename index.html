@@ -4,6 +4,30 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>GameCopilot — Features</title>
+<meta name="description" content="GameCopilot is a compact AI assistant overlay for Windows games: ask a question — optionally with a screenshot — and a multimodal model via OpenRouter searches current wikis and guides, answers in your language, and remembers everything in per-game memory.">
+<link rel="canonical" href="https://lapin-collab.github.io/gamecopilot-site/">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#F4F5F8">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#15171E">
+<meta property="og:title" content="GameCopilot — AI game assistant overlay for Windows">
+<meta property="og:description" content="A compact overlay for Windows: ask a question with a screenshot, get answers from current wikis and guides, with per-game RAG memory, notes, and a progress journal.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lapin-collab.github.io/gamecopilot-site/">
+<meta property="og:site_name" content="GameCopilot">
+<meta property="og:image" content="https://lapin-collab.github.io/gamecopilot-site/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "GameCopilot",
+  "operatingSystem": "Windows 10, Windows 11",
+  "applicationCategory": "GameApplication",
+  "description": "A compact AI assistant overlay for Windows games with web search, screenshots, and per-game RAG memory.",
+  "url": "https://lapin-collab.github.io/gamecopilot-site/",
+  "offers": { "@type": "Offer", "url": "https://digital-outsider.itch.io/gamecopilot" }
+}
+</script>
 <style>
   /* ===== Tokens: exact palettes from gamecopilot/theme.py ===== */
   :root {
@@ -106,6 +130,16 @@
   }
   .buy-btn:hover { filter: brightness(1.08); }
   .buy-btn.big { font-size: 16px; padding: 11px 26px; border-radius: 9px; }
+  .doc-btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: var(--surface); color: var(--text);
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 6px 15px; font-size: 13.5px; font-weight: 600;
+    text-decoration: none; white-space: nowrap;
+  }
+  .doc-btn:hover { border-color: var(--accent); }
+  .footer a { color: var(--accent); text-decoration: none; font-weight: 600; }
+  .footer a:hover { text-decoration: underline; }
 
   /* ===== Bottom CTA ===== */
   .cta-block {
@@ -386,8 +420,8 @@
     <div class="logo-name">GameCopilot</div>
     <div class="ver-pill">v0.5.4</div>
     <div class="topbar-spacer"></div>
-    <!-- TODO: replace href with the itch.io page URL -->
-    <a class="buy-btn" href="#" data-buy-link>🛒 <span class="en">Buy</span></a>
+    <a class="doc-btn" href="guide.html">📖 <span class="en">Docs</span></a>
+    <a class="buy-btn" href="https://digital-outsider.itch.io/gamecopilot" target="_blank" rel="noopener" data-buy-link>🛒 <span class="en">Buy</span></a>
     
   </div>
 </header>
@@ -717,8 +751,7 @@
         
         <span class="en">A portable Windows build — download, unzip, run. The only running cost is your own OpenRouter key: a typical question costs a fraction of a cent.</span>
       </p>
-      <!-- TODO: replace href with the itch.io page URL -->
-      <a class="buy-btn big" href="#" data-buy-link>🛒 <span class="en">Buy on itch.io</span></a>
+      <a class="buy-btn big" href="https://digital-outsider.itch.io/gamecopilot" target="_blank" rel="noopener" data-buy-link>🛒 <span class="en">Buy on itch.io</span></a>
     </div>
   </section>
 
@@ -727,6 +760,7 @@
       <span><b>GameCopilot 0.5.4</b> · <span class="en">July 2026</span></span>
       <span><span class="en">Windows 10/11 · windowed or borderless game mode</span></span>
       <span><span class="en">All it needs is an</span> <b>OpenRouter</b> <span class="en">key and a multimodal model, e.g.</span> <code>google/gemini-2.5-flash</code></span>
+      <span><a href="guide.html"><span class="en">User Guide</span></a></span>
     </div>
   </footer>
 </main>
@@ -829,5 +863,7 @@
   startTyping();
 })();
 </script>
+<script data-goatcounter="https://digital-outsider.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
