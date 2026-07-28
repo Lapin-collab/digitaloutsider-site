@@ -448,7 +448,7 @@
       <p class="hero-hint">
         <span class="arrow">→</span>
         
-        <span class="en">The mock is live: try the bar buttons — <b>📖 👁 📝 🧭 ✖</b></span>
+        <span class="en">The mock is live: try the bar buttons — <b>👁 📝 🧭 📖 ✖</b></span>
       </p>
     </div>
 
@@ -457,11 +457,11 @@
         <div class="mock-bar">
           <span class="drag" aria-hidden="true">⠿</span>
           <span class="game-name">Valheim</span>
-          <button class="bar-btn" id="mb-chat" type="button" title="Collapse chat">📖</button>
+          <button class="bar-btn" data-target="card-search" type="button" title="Chat history & search">📚</button>
           <button class="bar-btn" id="mb-ghost" type="button" title="Opacity">👁</button>
-          <button class="bar-btn" data-target="card-search" type="button" title="Chats & search">📚</button>
           <button class="bar-btn" id="mb-notes" type="button" title="Notes">📝</button>
           <button class="bar-btn" id="mb-journal" type="button" title="Progress journal">🧭</button>
+          <button class="bar-btn" id="mb-chat" type="button" title="Collapse/expand chat">📖</button>
           <button class="bar-btn" data-target="card-prompts" type="button" title="Settings">⚙</button>
           <button class="bar-btn" id="mb-close" type="button" title="Hide to tray">✖</button>
         </div>
@@ -496,6 +496,7 @@
             <button class="bar-btn" type="button" title="Screenshot">🖼</button>
             <button class="bar-btn checked" type="button" title="RAG">🧠</button>
             <button class="send-btn" type="button">Send</button>
+            <button class="bar-btn" id="mb-reset" type="button" title="Reset context">🔄</button>
           </div>
         </div>
       </div>
@@ -545,7 +546,7 @@
       </div>
       <div class="pipe-arrow" aria-hidden="true">→</div>
       <div class="pipe-step">
-        <div class="icon">🗄️</div>
+        <div class="icon">📚</div>
         <div class="t"><span class="en">History + index</span></div>
         <div class="d"><span class="en">Everything lands in SQLite and gets indexed: FTS5 plus vector embeddings.</span></div>
       </div>
@@ -812,6 +813,7 @@
     }, 24);
   }
   document.getElementById('replay').addEventListener('click', startTyping);
+  document.getElementById('mb-reset').addEventListener('click', startTyping);
 
   /* ---------- mock overlay interactions ---------- */
   var mock = document.getElementById('mock');
