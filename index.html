@@ -448,7 +448,7 @@
       <p class="hero-hint">
         <span class="arrow">→</span>
         
-        <span class="en">The mock is live: try the bar buttons — <b>💬 🩻 📝 🧭 ✖</b></span>
+        <span class="en">The mock is live: try the bar buttons — <b>📖 👁 📝 🧭 ✖</b></span>
       </p>
     </div>
 
@@ -457,9 +457,9 @@
         <div class="mock-bar">
           <span class="drag" aria-hidden="true">⠿</span>
           <span class="game-name">Valheim</span>
-          <button class="bar-btn" id="mb-chat" type="button" title="Collapse chat">💬</button>
-          <button class="bar-btn" id="mb-ghost" type="button" title="Opacity">🩻</button>
-          <button class="bar-btn" data-target="card-search" type="button" title="Chats & search">🗂</button>
+          <button class="bar-btn" id="mb-chat" type="button" title="Collapse chat">📖</button>
+          <button class="bar-btn" id="mb-ghost" type="button" title="Opacity">👁</button>
+          <button class="bar-btn" data-target="card-search" type="button" title="Chats & search">📚</button>
           <button class="bar-btn" id="mb-notes" type="button" title="Notes">📝</button>
           <button class="bar-btn" id="mb-journal" type="button" title="Progress journal">🧭</button>
           <button class="bar-btn" data-target="card-prompts" type="button" title="Settings">⚙</button>
@@ -493,7 +493,7 @@
           </div>
           <div class="mock-composer">
             <div class="mock-input" id="mock-placeholder">Message…</div>
-            <button class="bar-btn" type="button" title="Screenshot">📷</button>
+            <button class="bar-btn" type="button" title="Screenshot">🖼</button>
             <button class="bar-btn checked" type="button" title="RAG">🧠</button>
             <button class="send-btn" type="button">Send</button>
           </div>
@@ -607,9 +607,9 @@
       </div>
 
       <div class="card" id="card-shots">
-        <div class="icon">📷</div>
+        <div class="icon">🖼</div>
         <h3><span class="en">One-click screenshots</span></h3>
-        <p><span class="en">📷 instantly captures the game window; any clipboard screenshot (<kbd>PrtSc</kbd>, <kbd>Win+Shift+S</kbd>) becomes an attachment chip automatically.</span></p>
+        <p><span class="en">🖼 instantly captures the game window; any clipboard screenshot (<kbd>PrtSc</kbd>, <kbd>Win+Shift+S</kbd>) becomes an attachment chip automatically.</span></p>
         <details>
           <summary><span class="en">Details</span></summary>
           <div class="detail-body"><ul>
@@ -679,7 +679,7 @@
       </div>
 
       <div class="card" id="card-library">
-        <div class="icon">🗂</div>
+        <div class="icon">📚</div>
         <h3><span class="en">Games library & meta</span></h3>
         <p><span class="en">The model researches the game online and builds its meta: genre, current patch, notable changes. Duplicate games merge into one entry with automatic reindexing.</span></p>
         <details>
@@ -824,7 +824,10 @@
       fn(on);
     });
   }
-  toggle('mb-chat', function (on) { mock.classList.toggle('collapsed', on); });
+  toggle('mb-chat', function (on) {
+    mock.classList.toggle('collapsed', on);
+    document.getElementById('mb-chat').textContent = on ? '📘' : '📖';
+  });
   toggle('mb-ghost', function (on) { mock.classList.toggle('ghost', on); });
   toggle('mb-notes', function (on) {
     document.getElementById('panel-notes').classList.toggle('hide', !on);
