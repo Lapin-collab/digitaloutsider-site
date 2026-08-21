@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://lapin-collab.github.io/gamecopilot-site/sitemap.xml
+Sitemap: https://digitaloutsider.xyz/sitemap.xml
