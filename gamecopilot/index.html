@@ -390,6 +390,22 @@
     border-radius: 5px; padding: 1px 5px;
   }
 
+  /* ===== Credits ===== */
+  .pack-cards {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+    margin: 4px 0 16px;
+  }
+  .pack-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 18px;
+    display: flex; flex-direction: column; align-items: flex-start; gap: 8px;
+  }
+  .pack-card .pack-name { font-weight: 600; font-size: 15px; }
+  .pack-card .pack-price { font-size: 24px; font-weight: 700; letter-spacing: -0.01em; }
+  .pack-card .pack-note { font-size: 12.5px; color: var(--secondary); }
+  .pack-card .buy-btn { margin-top: 4px; align-self: stretch; justify-content: center; }
+  .fineprint { font-size: 13px; color: var(--secondary); margin: 4px 0 0; }
+
   /* ===== Footer ===== */
   .footer {
     border-top: 1px solid var(--border);
@@ -404,10 +420,12 @@
     .hero { grid-template-columns: 1fr; gap: 30px; padding-top: 36px; }
     .grid { grid-template-columns: repeat(2, 1fr); }
     .stats { grid-template-columns: repeat(2, 1fr); }
+    .pack-cards { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 560px) {
     .grid { grid-template-columns: 1fr; }
     .pipe-step { min-width: 132px; }
+    .pack-cards { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -793,6 +811,55 @@
         </details>
       </div>
     </div>
+  </section>
+
+  <!-- ============ CREDITS ============ -->
+  <section class="section" id="credits">
+    <div class="section-head">
+      <p class="eyebrow"><span class="en">Credits</span></p>
+      <h2>
+
+        <span class="en">No OpenRouter account? Buy credits.</span>
+      </h2>
+      <p class="sub">
+
+        <span class="en">AI works out of the box — buy credits right inside GameCopilot. Buying here also works: you'll get a license key by e-mail to paste into the widget.</span>
+      </p>
+    </div>
+
+    <div class="pack-cards">
+      <div class="pack-card">
+        <div class="pack-name"><span class="en">Starter</span></div>
+        <div class="pack-price">$6.99</div>
+        <div class="pack-note"><span class="en">A first top-up to try the assistant properly.</span></div>
+        <a class="buy-btn" href="#" target="_blank" rel="noopener" data-buy-pack="starter"><span class="en">Buy</span></a>
+      </div>
+      <div class="pack-card">
+        <div class="pack-name"><span class="en">Plus</span></div>
+        <div class="pack-price">$12.99</div>
+        <div class="pack-note"><span class="en">For steady play across a few games.</span></div>
+        <a class="buy-btn" href="#" target="_blank" rel="noopener" data-buy-pack="plus"><span class="en">Buy</span></a>
+      </div>
+      <div class="pack-card">
+        <div class="pack-name"><span class="en">Pro</span></div>
+        <div class="pack-price">$24.99</div>
+        <div class="pack-note"><span class="en">The best per-question price for heavy use.</span></div>
+        <a class="buy-btn" href="#" target="_blank" rel="noopener" data-buy-pack="pro"><span class="en">Buy</span></a>
+      </div>
+    </div>
+    <!-- TODO go-live: replace href="#" on the three .buy-btn[data-buy-pack]
+         links above with the production Polar static checkout links
+         (minted in the Polar dashboard at W10 — the sandbox only exposes a
+         dynamic checkout-session endpoint, not static per-product links). -->
+
+    <p class="fineprint">
+
+      <span class="en">Purchasing is live today inside GameCopilot: open the app, Step 1 of the setup wizard → "Buy GameCopilot credits (recommended)" → pick a pack. A purchase here on the website works too — you'll get a license key by e-mail to paste into the widget (Step 1 → "I already have a license key").</span>
+    </p>
+    <p class="fineprint">
+
+      <span class="en">Prefer your own OpenRouter key? That still works — see the <a href="guide.html">guide</a>.</span>
+    </p>
   </section>
 
   <!-- ============ BOTTOM CTA ============ -->
