@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Runcraft — Privacy Policy</title>
+<meta name="description" content="What Runcraft reads from Strava, how it is used, who can see it, how long it is kept, and how to disconnect and delete your data.">
+<link rel="canonical" href="https://digitaloutsider.xyz/runcraft/privacy.html">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2315110d'/%3E%3Crect x='6' y='6' width='52' height='52' rx='10' fill='none' stroke='%23c9a227' stroke-width='3'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='36' font-weight='700' fill='%23efd77a' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#15110d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { color-scheme: dark; --bg: #15110d; --gold: #c9a227; --gold-dark: #7a5c12; --gold-light: #efd77a; --text: #efe6d2; --muted: #b5a78a; --serif: "Cinzel", Georgia, serif; --sans: "Inter", "Segoe UI", system-ui, sans-serif; }
+  * { box-sizing: border-box; }
+  html { background: var(--bg); }
+  body { margin: 0; color: var(--text); font-family: var(--sans); font-size: 16.5px; line-height: 1.6; background: linear-gradient(180deg, #1a1510 0%, #15110d 60%, #100d09 100%); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 22px 60px; }
+  .top { display: flex; align-items: center; gap: 14px; padding: 18px 0 8px; font-size: 14px; }
+  .top a { color: var(--muted); text-decoration: none; } .top a:hover { color: var(--gold-light); }
+  h1 { font-family: var(--serif); color: var(--gold-light); font-size: clamp(28px, 5vw, 40px); margin: 18px 0 4px; }
+  .meta { color: var(--muted); font-size: 14px; margin-bottom: 26px; }
+  h2 { font-family: var(--serif); color: var(--gold); font-size: 20px; margin: 30px 0 8px; }
+  p, li { color: var(--text); } ul { padding-left: 22px; } li { margin: 5px 0; }
+  a { color: var(--gold-light); }
+  table { width: 100%; border-collapse: collapse; font-size: 15px; margin: 8px 0 12px; }
+  th, td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid rgba(201,162,39,.25); }
+  th { color: var(--gold); font-family: var(--serif); font-weight: 600; font-size: 13.5px; letter-spacing: .05em; }
+  .note { border: 1px solid var(--gold-dark); background: rgba(0,0,0,.3); padding: 12px 16px; color: var(--muted); font-size: 14.5px; }
+  footer { border-top: 1px solid rgba(201,162,39,.25); margin-top: 40px; padding-top: 20px; color: var(--muted); font-size: 13.5px; }
+  footer a { text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><a href="./">← Runcraft</a> · <a href="/">Digital Outsider</a></div>
+  <h1>Runcraft Privacy Policy</h1>
+  <div class="meta">Effective 12 September 2026 · Version 0.1 · Applies to the prototype and closed beta of Runcraft</div>
+
+  <p class="note">Runcraft is an independent project by Digital Outsider. It is a game that reads your finished runs from Strava and turns them into a character's progress. This policy explains, in plain words, what we read, why, who can see it, how long we keep it and how you can make us delete it. It will be updated before any public release.</p>
+
+  <h2>1. Who we are</h2>
+  <p>Digital Outsider, an independent software developer. Contact for anything in this policy: <a href="mailto:support@digitaloutsider.xyz">support@digitaloutsider.xyz</a>. Runcraft is not affiliated with or endorsed by Strava, Inc.</p>
+
+  <h2>2. What we collect and why</h2>
+  <p>Runcraft has no account system of its own. You sign in with Strava, and Strava asks you to approve the access below. We request the minimum the game needs.</p>
+  <table>
+    <tr><th>Data</th><th>Source</th><th>Why we need it</th></tr>
+    <tr><td>Your Strava athlete ID, first name, profile picture</td><td>Strava, on sign-in</td><td>To recognise you when you return and to show your own profile in the app</td></tr>
+    <tr><td>Your running activities: type, distance, moving and elapsed time, start time and time zone, splits per kilometre, laps, average cadence, average heart rate if your device recorded it, elevation gain, a summary route line</td><td>Strava, after each run</td><td>To simulate the run for your character: skill triggers, loot, experience, quests. Cadence and start time drive racial passives; heart rate and elevation drive optional quests</td></tr>
+    <tr><td>Game data: characters, levels, items, coins, quests, the results of each simulated run</td><td>Created by Runcraft</td><td>This is the game itself</td></tr>
+    <tr><td>Technical data: a session cookie, server logs with IP addresses and request times (kept up to 14 days), basic usage events such as "run processed" or "item bought"</td><td>Your browser and our servers</td><td>To keep you signed in, keep the service running and understand which parts of the game are used</td></tr>
+  </table>
+  <p>We do not read activities that are not runs (rides, swims, hikes). We do not read your Strava followers, clubs, segments or other athletes' data. We do not read second-by-second GPS streams. If you allow "activity:write" in a future version, it will be used only to add a Runcraft line to the description of your own activity, and only after you switch that option on.</p>
+
+  <h2>3. Who can see your data</h2>
+  <ul>
+    <li><b>Your running data is shown only to you.</b> No other Runcraft player, and nobody outside Runcraft, sees your distances, paces, routes, heart rate or times. This follows Strava's API Agreement, which we are bound by.</li>
+    <li>Other players may see <b>game statistics only</b>: your character's nickname, faction, race, class, level, number of skill triggers and items, and, in a future version, an opt-in leaderboard position. None of this is Strava data.</li>
+    <li>We never sell or rent your data, and we never use it for advertising.</li>
+  </ul>
+
+  <h2>4. No AI training</h2>
+  <p>Data obtained through Strava is never used to train artificial intelligence or machine learning models. A future version may offer an optional in-game commentator that describes your own run to you using a language model; if we add it, the request will contain only your own run summary, you will be told before it is switched on, and the provider will be contractually barred from training on the data.</p>
+
+  <h2>5. Who processes the data for us</h2>
+  <ul>
+    <li><b>Strava, Inc.</b> — the source of your activities, under its own <a href="https://www.strava.com/legal/privacy" rel="noopener">privacy policy</a>.</li>
+    <li><b>Our hosting provider</b> — the server that runs Runcraft and stores its database.</li>
+    <li><b>GoatCounter</b> — privacy-friendly, cookie-free page-view counting on this website only (not inside the game).</li>
+  </ul>
+
+  <h2>6. How long we keep it</h2>
+  <ul>
+    <li>Raw activity data is kept while your Strava connection is active, so your run history and replays keep working.</li>
+    <li>When you disconnect Runcraft in Strava, or revoke access in the game, raw activity data is deleted within 24 hours. Your characters and game results are kept for 30 days in case you reconnect, then deleted.</li>
+    <li>Server logs are kept up to 14 days.</li>
+  </ul>
+
+  <h2>7. Your rights and controls</h2>
+  <ul>
+    <li><b>Disconnect at any time</b> in Strava: Settings → My Apps → Runcraft → Revoke access. Runcraft receives a notification and starts deletion automatically.</li>
+    <li><b>Export</b> your game data and <b>delete</b> everything from inside the game's settings, or by writing to <a href="mailto:support@digitaloutsider.xyz">support@digitaloutsider.xyz</a>. We answer within 30 days.</li>
+    <li>You may ask us to correct data, restrict its use, or object to it. If you are in the EU, UK or another jurisdiction with data-protection law, you also have the right to complain to your local authority.</li>
+  </ul>
+
+  <h2>8. Cookies</h2>
+  <p>The game uses one strictly necessary session cookie to keep you signed in. This website uses none. GoatCounter counts visits without cookies.</p>
+
+  <h2>9. Security</h2>
+  <p>Strava access tokens are stored encrypted. All traffic is over HTTPS. Access to the database is restricted to the developer. No system is perfectly secure; if a breach ever affects your data we will tell you and Strava without undue delay.</p>
+
+  <h2>10. Children</h2>
+  <p>Runcraft is not intended for anyone under 16. We do not knowingly collect data from children.</p>
+
+  <h2>11. Changes</h2>
+  <p>We will change this policy as Runcraft grows, and will show a notice in the game and on this page when we do. The version and effective date at the top tell you which text applies.</p>
+
+  <footer>
+    <a href="./">Runcraft</a> · <a href="/">Digital Outsider</a> · <a href="mailto:support@digitaloutsider.xyz">support@digitaloutsider.xyz</a>
+  </footer>
+</div>
+<script data-goatcounter="https://digital-outsider.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

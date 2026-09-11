@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Runcraft — turn your runs into an idle RPG</title>
+<meta name="description" content="Runcraft is an afk-MMORPG on top of your Strava runs. You run as usual; after every run your character replays it: skills trigger by distance, intervals and pace, loot drops, levels grow. Your data is shown only to you.">
+<link rel="canonical" href="https://digitaloutsider.xyz/runcraft/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2315110d'/%3E%3Crect x='6' y='6' width='52' height='52' rx='10' fill='none' stroke='%23c9a227' stroke-width='3'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='36' font-weight='700' fill='%23efd77a' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#15110d">
+<meta property="og:title" content="Runcraft — turn your runs into an idle RPG">
+<meta property="og:description" content="An afk-MMORPG on top of your Strava runs: your character replays every run, skills trigger by distance, intervals and pace, loot drops. Your data is shown only to you.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://digitaloutsider.xyz/runcraft/">
+<meta property="og:site_name" content="Runcraft">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #15110d; --stone: #2c241b; --stone2: #3a3024;
+    --gold: #c9a227; --gold-dark: #7a5c12; --gold-light: #efd77a;
+    --parch: #e9dab3; --parch-dark: #cdb98a; --ink: #2a2016;
+    --text: #efe6d2; --muted: #b5a78a;
+    --red: #c73a2c; --blue: #3a7bdc; --yellow: #e2b62c;
+    --serif: "Cinzel", Georgia, "Times New Roman", serif;
+    --sans: "Inter", "Segoe UI", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--bg); scroll-behavior: smooth; }
+  body {
+    margin: 0; min-height: 100vh;
+    color: var(--text); font-family: var(--sans); font-size: 17px; line-height: 1.55;
+    background:
+      radial-gradient(1200px 600px at 20% -10%, rgba(201,162,39,.12), transparent 60%),
+      radial-gradient(900px 500px at 110% 110%, rgba(201,162,39,.08), transparent 60%),
+      linear-gradient(180deg, #1a1510 0%, #15110d 60%, #100d09 100%);
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 22px; }
+  h1, h2, h3 { font-family: var(--serif); letter-spacing: .02em; color: var(--gold-light); text-shadow: 0 1px 0 #3a2a05; }
+  h1 { font-size: clamp(44px, 9vw, 96px); margin: 0 0 .15em; line-height: 1; text-shadow: 0 2px 0 #3a2a05, 0 0 30px rgba(201,162,39,.35); }
+  h2 { font-size: clamp(24px, 3vw, 36px); margin: 0 0 .5em; }
+  h3 { font-size: 19px; margin: 0 0 .35em; color: var(--gold); }
+  p { margin: 0 0 1em; }
+  a { color: var(--gold-light); }
+  .muted { color: var(--muted); }
+  .kicker { color: var(--muted); text-transform: uppercase; letter-spacing: .18em; font-size: 12.5px; font-weight: 600; margin-bottom: 14px; }
+  .rule { height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 6px 0 22px; opacity: .7; }
+
+  /* top bar */
+  .top { display: flex; align-items: center; gap: 14px; padding: 18px 0; }
+  .top .brand { font-family: var(--serif); font-weight: 700; font-size: 18px; color: var(--gold-light); text-decoration: none; }
+  .top .home { color: var(--muted); text-decoration: none; font-size: 14px; }
+  .top .home:hover { color: var(--gold-light); }
+  .top .spacer { flex: 1; }
+  .top .status { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--gold-light); border: 1px solid var(--gold-dark); border-radius: 999px; padding: 4px 12px; background: rgba(0,0,0,.3); }
+
+  /* frames */
+  .frame { position: relative; background: linear-gradient(180deg, var(--stone2), var(--stone)); border: 2px solid var(--gold-dark); box-shadow: inset 0 0 0 2px var(--bg), inset 0 0 0 3px var(--gold-dark), 0 8px 30px rgba(0,0,0,.45); padding: 22px; }
+  .frame::before, .frame::after { content: ""; position: absolute; width: 10px; height: 10px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, var(--gold-light), var(--gold-dark)); box-shadow: 0 0 0 2px #1a1510; }
+  .frame::before { top: -6px; left: -6px; } .frame::after { bottom: -6px; right: -6px; }
+  .parch { background: linear-gradient(180deg, var(--parch), var(--parch-dark)); color: var(--ink); border: 2px solid #6a4f14; box-shadow: inset 0 0 0 2px #f4ead0, 0 6px 20px rgba(0,0,0,.4); padding: 22px; }
+  .parch h2, .parch h3 { color: #5d4210; text-shadow: none; }
+  .parch a { color: #5d4210; }
+  .parch .muted { color: #6f5d3a; }
+
+  /* hero */
+  .hero { padding: 40px 0 30px; display: grid; grid-template-columns: 1.2fr .8fr; gap: 36px; align-items: center; }
+  .lead { font-size: clamp(17px, 2vw, 21px); max-width: 56ch; color: var(--text); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 24px; }
+  .chip { font-size: 13px; font-weight: 600; color: var(--gold-light); border: 1px solid var(--gold-dark); border-radius: 999px; padding: 5px 12px; background: rgba(0,0,0,.3); }
+  .btns { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn { font-family: var(--serif); font-weight: 700; font-size: 15px; text-decoration: none; padding: 12px 20px; border-radius: 4px; border: 1px solid var(--gold-dark); color: var(--gold-light); background: rgba(0,0,0,.35); }
+  .btn.primary { background: var(--gold); color: #221a05; border-color: var(--gold); }
+  .btn:hover { border-color: var(--gold); filter: brightness(1.06); }
+
+  /* crests */
+  .crests { display: flex; justify-content: center; gap: 28px; }
+  .crest { width: 132px; text-align: center; }
+  .crest svg { width: 100%; height: auto; filter: drop-shadow(0 6px 14px rgba(0,0,0,.6)); }
+  .crest .name { font-family: var(--serif); color: var(--gold-light); font-size: 15px; margin-top: 6px; }
+  .crest .motto { font-size: 12.5px; color: var(--muted); }
+
+  /* log */
+  .log { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 13.5px; line-height: 1.6; background: rgba(0,0,0,.45); border: 1px solid var(--gold-dark); padding: 14px 16px; color: #d8cfb8; white-space: pre-wrap; margin: 0; }
+  .log .km { color: var(--muted); }
+  .rare { color: #3b8be6; } .poor { color: #9a9a9a; }
+
+  section { padding: 28px 0; }
+  .grid { display: grid; gap: 16px; }
+  .g2 { grid-template-columns: 1fr 1fr; } .g3 { grid-template-columns: repeat(3, 1fr); } .g4 { grid-template-columns: repeat(4, 1fr); }
+  .step { position: relative; text-align: center; padding-top: 26px; }
+  .step .n { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); width: 26px; height: 26px; border-radius: 50%; background: var(--gold); color: #221a05; font-family: var(--serif); font-weight: 700; font-size: 13px; line-height: 26px; box-shadow: 0 0 0 2px var(--bg); }
+  .step p { margin: 0; font-size: 14.5px; color: var(--muted); }
+  .cls { border-top: 4px solid var(--gold-dark); }
+  .cls.red { border-top-color: var(--red); } .cls.blue { border-top-color: var(--blue); } .cls.yellow { border-top-color: var(--yellow); }
+  .cls p { margin: 0; font-size: 15px; color: var(--muted); }
+  .pill { display: inline-block; font-size: 12px; font-weight: 600; border-radius: 999px; padding: 2px 10px; margin-left: 6px; vertical-align: middle; }
+  .pill.red { background: var(--red); color: #fff; } .pill.blue { background: var(--blue); color: #fff; } .pill.yellow { background: var(--yellow); color: #221a05; }
+  ul.clean { margin: 0; padding-left: 20px; } ul.clean li { margin: 6px 0; }
+  .races { display: flex; flex-wrap: wrap; gap: 8px 18px; font-family: var(--serif); font-size: 15px; }
+  .races .p { color: var(--blue); } .races .h { color: var(--red); }
+
+  footer { border-top: 1px solid rgba(201,162,39,.25); margin-top: 20px; padding: 26px 0 44px; color: var(--muted); font-size: 13.5px; }
+  footer .row { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-bottom: 10px; }
+  footer a { color: var(--gold-light); text-decoration: none; } footer a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  @media (max-width: 860px) { .hero { grid-template-columns: 1fr; } .g3, .g4, .g2 { grid-template-columns: 1fr; } .crest { width: 110px; } }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="home" href="/">← Digital Outsider</a>
+    <span class="spacer"></span>
+    <span class="status">In development</span>
+  </div>
+
+  <section class="hero">
+    <div>
+      <div class="kicker">A Digital Outsider project · Compatible with Strava</div>
+      <h1>RUNCRAFT</h1>
+      <p class="lead">An afk-MMORPG that lives on top of your Strava runs. You run as usual. After every run your character replays it in a lovingly ironic homage to classic MMORPGs: skills trigger by distance, intervals and pace, loot drops, levels grow, and the innkeeper has opinions about your splits.</p>
+      <div class="chips">
+        <span class="chip">PWA · phone &amp; desktop</span>
+        <span class="chip">Nothing runs during your run</span>
+        <span class="chip">Your data is shown only to you</span>
+        <span class="chip">Built for serious runners</span>
+      </div>
+      <div class="btns">
+        <a class="btn primary" href="mailto:support@digitaloutsider.xyz?subject=Runcraft%20early%20access">Ask for early access</a>
+        <a class="btn" href="privacy.html">Privacy policy</a>
+      </div>
+    </div>
+    <div class="crests" aria-hidden="true">
+      <div class="crest">
+        <svg viewBox="0 0 100 120"><defs><linearGradient id="gp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a7bdc"/><stop offset="1" stop-color="#1a1510"/></linearGradient></defs><path d="M50 4 L92 18 V62 C92 90 70 108 50 116 C30 108 8 90 8 62 V18 Z" fill="url(#gp)" stroke="#c9a227" stroke-width="3"/><path d="M50 14 L82 25 V62 C82 84 66 98 50 105 C34 98 18 84 18 62 V25 Z" fill="none" stroke="#efd77a" stroke-width="1.2" opacity=".7"/><text x="50" y="76" text-anchor="middle" font-family="Cinzel,Georgia,serif" font-size="46" font-weight="700" fill="#efd77a">P</text></svg>
+        <div class="name">Paceliance</div><div class="motto">Hold the pace. Hold the line.</div>
+      </div>
+      <div class="crest">
+        <svg viewBox="0 0 100 120"><defs><linearGradient id="gh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c73a2c"/><stop offset="1" stop-color="#1a1510"/></linearGradient></defs><path d="M50 4 L92 18 V62 C92 90 70 108 50 116 C30 108 8 90 8 62 V18 Z" fill="url(#gh)" stroke="#c9a227" stroke-width="3"/><path d="M50 14 L82 25 V62 C82 84 66 98 50 105 C34 98 18 84 18 62 V25 Z" fill="none" stroke="#efd77a" stroke-width="1.2" opacity=".7"/><text x="50" y="76" text-anchor="middle" font-family="Cinzel,Georgia,serif" font-size="46" font-weight="700" fill="#efd77a">H</text></svg>
+        <div class="name">Hordistance</div><div class="motto">Distance is honor!</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>How it works</h2>
+    <div class="rule"></div>
+    <div class="grid g4">
+      <div class="frame step"><span class="n">1</span><h3>You run</h3><p>With your watch, your laps, your Strava. Runcraft tracks nothing and never interrupts a run.</p></div>
+      <div class="frame step"><span class="n">2</span><h3>Strava hands over the run</h3><p>Once the activity lands in Strava, Runcraft picks it up: distance, splits, laps, cadence, pace.</p></div>
+      <div class="frame step"><span class="n">3</span><h3>Your character replays it</h3><p>A deterministic simulation: skills trigger by metres, intervals and pace, resource drains, crits stack.</p></div>
+      <div class="frame step"><span class="n">4</span><h3>Loot, XP, the Tavern</h3><p>Five minutes after the run: sort the drops, sell the junk, take a quest, equip the epic, go run again.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="grid g2">
+      <div>
+        <h2>Three classes, three ways to run</h2>
+        <div class="rule"></div>
+        <div class="grid">
+          <div class="frame cls red"><h3>Runrior <span class="pill red">Rage</span></h3><p><b>Charge</b> triggers every few hundred metres of distance, any pace. Long runs and easy miles are its home.</p></div>
+          <div class="frame cls blue"><h3>Runage <span class="pill blue">Mana</span></h3><p><b>Blink</b> triggers inside fast intervals: watch laps or auto-detected repeats. The more reps you hold, the more it blinks.</p></div>
+          <div class="frame cls yellow"><h3>Rungue <span class="pill yellow">Energy</span></h3><p><b>Sprint</b> triggers on stretches faster than a pace threshold. Tempo runs, races, negative splits.</p></div>
+        </div>
+      </div>
+      <div>
+        <h2>A run, replayed</h2>
+        <div class="rule"></div>
+        <pre class="log"><span class="km">[2.4 km]</span> Charge! Rage 120/150.
+<span class="km">[2.4 km]</span> You receive: <span class="poor">[Worn Sneakers]</span> (Poor).
+<span class="km">[5.0 km]</span> Crit ×1: one more kilometre past the fifth.
+<span class="km">[6.1 km]</span> Rage depleted. Runbert catches his breath… (500 m)
+<span class="km">[6.6 km]</span> Rage restored!
+<span class="km">[9.8 km]</span> You receive: <span class="rare">[Duskrunner's Gaiters]</span> (Rare)!
+<span class="km">[10.0 km]</span> Run complete. +43 XP. Level 3!</pre>
+        <p class="muted" style="font-size:14px;margin-top:10px">Six races with passives for cadence, time of day and coin: <span class="races"><span class="p">Go-nomes</span><span class="p">Evening elves</span><span class="p">Runmans</span><span class="h">Runks</span><span class="h">Un-dawn</span><span class="h">Go-go-blins</span></span></p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="grid g2">
+      <div class="parch">
+        <h2>Built for serious runners</h2>
+        <ul class="clean">
+          <li>Thresholds are honest and grow with level: from 200 m per Charge at level 1 to about 1 km at level 60; pace thresholds from 5:30 to 4:15 min/km.</li>
+          <li>Reaching the level cap of 60 takes about a year for a runner doing four runs a week, half of them interval or tempo workouts.</li>
+          <li>Easy runs still count: a kilometre of regular running is a point of experience and a chance at loot.</li>
+          <li>Every curve, threshold, drop table and price lives in a config that gets tuned weekly.</li>
+        </ul>
+      </div>
+      <div class="frame">
+        <h2>Your data, your eyes only</h2>
+        <ul class="clean">
+          <li>Runcraft reads only your runs from Strava: distance, time, splits, laps, cadence and heart rate when present.</li>
+          <li>Other players never see your running data. They see game stats: level, skill triggers, items, faction.</li>
+          <li>Nothing is used to train AI models. Ever.</li>
+          <li>Disconnect Runcraft in your Strava settings at any time; raw activity data is deleted.</li>
+        </ul>
+        <p style="margin:12px 0 0"><a href="privacy.html">Read the full privacy policy →</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Where it is now</h2>
+    <div class="rule"></div>
+    <div class="grid g3">
+      <div class="frame"><h3>Prototype · autumn 2026</h3><p class="muted" style="margin:0;font-size:15px">Simulation engine, balance sandbox, real runs of the author. No public sign-ups yet.</p></div>
+      <div class="frame"><h3>Closed beta</h3><p class="muted" style="margin:0;font-size:15px">The full loop as an installable web app for a handful of runners. New Strava apps are limited to ten connected athletes, so seats are few.</p></div>
+      <div class="frame"><h3>v1</h3><p class="muted" style="margin:0;font-size:15px">Leaderboards on game stats, push notifications, an innkeeper who comments on your run, and more athletes as Strava allows.</p></div>
+    </div>
+    <p class="muted" style="margin-top:18px">Want a seat when the beta opens? Write to <a href="mailto:support@digitaloutsider.xyz?subject=Runcraft%20early%20access">support@digitaloutsider.xyz</a> with a link to your Strava profile.</p>
+  </section>
+
+  <footer>
+    <div class="row">
+      <span><b style="color:var(--text)">Runcraft</b> · a Digital Outsider project</span>
+      <a href="privacy.html">Privacy policy</a>
+      <a href="mailto:support@digitaloutsider.xyz">support@digitaloutsider.xyz</a>
+      <a href="/">digitaloutsider.xyz</a>
+    </div>
+    <div>Runcraft is an independent project, not affiliated with or endorsed by Strava, Inc. or Blizzard Entertainment. Faction, race, class and location names are parody. Activity data is used under Strava's API Agreement and displayed only to the athlete it belongs to.</div>
+  </footer>
+</div>
+<script data-goatcounter="https://digital-outsider.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
