@@ -24,6 +24,7 @@
     --parch: #e9dab3; --parch-dark: #cdb98a; --ink: #2a2016;
     --text: #efe6d2; --muted: #b5a78a;
     --red: #c73a2c; --blue: #3a7bdc; --yellow: #e2b62c;
+    --poor: #9a9a9a; --common: #f2f2f2; --uncommon: #35d43b; --rare: #3b8be6; --epic: #b055f0; --legendary: #ff9a1f;
     --serif: "Cinzel", Georgia, "Times New Roman", serif;
     --sans: "Inter", "Segoe UI", system-ui, sans-serif;
   }
@@ -38,20 +39,21 @@
       linear-gradient(180deg, #1a1510 0%, #15110d 60%, #100d09 100%);
     -webkit-font-smoothing: antialiased;
   }
-  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 22px; }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 22px; }
   h1, h2, h3 { font-family: var(--serif); letter-spacing: .02em; color: var(--gold-light); text-shadow: 0 1px 0 #3a2a05; }
-  h1 { font-size: clamp(44px, 9vw, 96px); margin: 0 0 .15em; line-height: 1; text-shadow: 0 2px 0 #3a2a05, 0 0 30px rgba(201,162,39,.35); }
-  h2 { font-size: clamp(24px, 3vw, 36px); margin: 0 0 .5em; }
+  h1 { font-size: clamp(48px, 10vw, 104px); margin: 0 0 .1em; line-height: 1; text-shadow: 0 2px 0 #3a2a05, 0 0 30px rgba(201,162,39,.35); }
+  h2 { font-size: clamp(24px, 3vw, 36px); margin: 0 0 .4em; }
   h3 { font-size: 19px; margin: 0 0 .35em; color: var(--gold); }
   p { margin: 0 0 1em; }
   a { color: var(--gold-light); }
   .muted { color: var(--muted); }
   .kicker { color: var(--muted); text-transform: uppercase; letter-spacing: .18em; font-size: 12.5px; font-weight: 600; margin-bottom: 14px; }
   .rule { height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 6px 0 22px; opacity: .7; }
+  .red { color: var(--red); } .blue { color: var(--blue); }
+  .poor { color: var(--poor); } .common { color: var(--common); } .uncommon { color: var(--uncommon); } .rare { color: var(--rare); } .epic { color: var(--epic); } .legendary { color: var(--legendary); }
 
   /* top bar */
   .top { display: flex; align-items: center; gap: 14px; padding: 18px 0; }
-  .top .brand { font-family: var(--serif); font-weight: 700; font-size: 18px; color: var(--gold-light); text-decoration: none; }
   .top .home { color: var(--muted); text-decoration: none; font-size: 14px; }
   .top .home:hover { color: var(--gold-light); }
   .top .spacer { flex: 1; }
@@ -67,47 +69,76 @@
   .parch .muted { color: #6f5d3a; }
 
   /* hero */
-  .hero { padding: 40px 0 30px; display: grid; grid-template-columns: 1.2fr .8fr; gap: 36px; align-items: center; }
-  .lead { font-size: clamp(17px, 2vw, 21px); max-width: 56ch; color: var(--text); }
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 24px; }
+  .hero { padding: 36px 0 26px; text-align: center; }
+  .lead { font-size: clamp(17px, 2vw, 21px); max-width: 62ch; color: var(--text); margin: 0 auto 1em; }
+  .chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 18px 0 24px; }
   .chip { font-size: 13px; font-weight: 600; color: var(--gold-light); border: 1px solid var(--gold-dark); border-radius: 999px; padding: 5px 12px; background: rgba(0,0,0,.3); }
-  .btns { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btns { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
   .btn { font-family: var(--serif); font-weight: 700; font-size: 15px; text-decoration: none; padding: 12px 20px; border-radius: 4px; border: 1px solid var(--gold-dark); color: var(--gold-light); background: rgba(0,0,0,.35); }
   .btn.primary { background: var(--gold); color: #221a05; border-color: var(--gold); }
   .btn:hover { border-color: var(--gold); filter: brightness(1.06); }
 
-  /* crests */
-  .crests { display: flex; justify-content: center; gap: 28px; }
-  .crest { width: 132px; text-align: center; }
-  .crest svg { width: 100%; height: auto; filter: drop-shadow(0 6px 14px rgba(0,0,0,.6)); }
-  .crest .name { font-family: var(--serif); color: var(--gold-light); font-size: 15px; margin-top: 6px; }
-  .crest .motto { font-size: 12.5px; color: var(--muted); }
-
-  /* log */
-  .log { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 13.5px; line-height: 1.6; background: rgba(0,0,0,.45); border: 1px solid var(--gold-dark); padding: 14px 16px; color: #d8cfb8; white-space: pre-wrap; margin: 0; }
-  .log .km { color: var(--muted); }
-  .rare { color: #3b8be6; } .poor { color: #9a9a9a; }
-
-  section { padding: 28px 0; }
+  section { padding: 30px 0; }
   .grid { display: grid; gap: 16px; }
-  .g2 { grid-template-columns: 1fr 1fr; } .g3 { grid-template-columns: repeat(3, 1fr); } .g4 { grid-template-columns: repeat(4, 1fr); }
-  .step { position: relative; text-align: center; padding-top: 26px; }
-  .step .n { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); width: 26px; height: 26px; border-radius: 50%; background: var(--gold); color: #221a05; font-family: var(--serif); font-weight: 700; font-size: 13px; line-height: 26px; box-shadow: 0 0 0 2px var(--bg); }
-  .step p { margin: 0; font-size: 14.5px; color: var(--muted); }
-  .cls { border-top: 4px solid var(--gold-dark); }
-  .cls.red { border-top-color: var(--red); } .cls.blue { border-top-color: var(--blue); } .cls.yellow { border-top-color: var(--yellow); }
-  .cls p { margin: 0; font-size: 15px; color: var(--muted); }
-  .pill { display: inline-block; font-size: 12px; font-weight: 600; border-radius: 999px; padding: 2px 10px; margin-left: 6px; vertical-align: middle; }
-  .pill.red { background: var(--red); color: #fff; } .pill.blue { background: var(--blue); color: #fff; } .pill.yellow { background: var(--yellow); color: #221a05; }
+  .g2 { grid-template-columns: 1fr 1fr; } .g3 { grid-template-columns: repeat(3, 1fr); }
+
+  /* core loop flow */
+  .flow { display: flex; flex-wrap: wrap; gap: 10px; align-items: stretch; justify-content: center; }
+  .flow .step { flex: 1 1 150px; min-width: 140px; max-width: 200px; position: relative; text-align: center; padding: 24px 14px 16px; }
+  .flow .step .n { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); width: 26px; height: 26px; border-radius: 50%; background: var(--gold); color: #221a05; font-family: var(--serif); font-weight: 700; font-size: 13px; line-height: 26px; box-shadow: 0 0 0 2px var(--bg); }
+  .flow .step h3 { font-size: 15px; margin: 0; }
+  .flow .arrow { align-self: center; color: var(--gold); font-size: 26px; opacity: .8; }
+
+  /* replay */
+  .rp-map { background: radial-gradient(circle at 50% 40%, #3b4a2c, #1f2a17 70%); border: 2px solid var(--gold-dark); box-shadow: inset 0 0 0 2px var(--bg), inset 0 0 0 3px var(--gold-dark); border-radius: 2px 2px 0 0; }
+  .rp-map svg { width: 100%; height: auto; display: block; }
+  .rp-log { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 13.5px; line-height: 1.6; background: rgba(0,0,0,.55); border: 2px solid var(--gold-dark); border-top: 0; padding: 12px 16px; color: #d8cfb8; height: 11.2em; overflow-y: auto; border-radius: 0 0 2px 2px; }
+  .rp-ln { transition: background .9s ease, color .9s ease; padding: 0 4px; margin: 0 -4px; }
+  .rp-ln.rp-new { background: rgba(201,162,39,.3); color: #fff; }
+  .rp-ln .km { color: var(--muted); }
+  .rp-bar { display: flex; justify-content: space-between; align-items: center; padding: 8px 0 0; font-size: 13.5px; color: var(--muted); }
+  .rp-btn { font-family: var(--serif); color: var(--gold-light); background: rgba(0,0,0,.35); border: 1px solid var(--gold-dark); padding: 6px 14px; cursor: pointer; border-radius: 3px; font-size: 14px; }
+  .rp-btn:hover { border-color: var(--gold); }
+  .rp-pop { animation: rp-pop .5s ease-out both; transform-box: fill-box; transform-origin: center; }
+  @keyframes rp-pop { from { opacity: 0; transform: translateY(8px) scale(.6); } to { opacity: 1; transform: none; } }
+  .rp-ring { animation: rp-ring .9s ease-out forwards; transform-box: fill-box; transform-origin: center; }
+  @keyframes rp-ring { from { transform: scale(.6); opacity: 1; } to { transform: scale(4); opacity: 0; } }
+  .replay-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 16px; align-items: start; }
   ul.clean { margin: 0; padding-left: 20px; } ul.clean li { margin: 6px 0; }
-  .races { display: flex; flex-wrap: wrap; gap: 8px 18px; font-family: var(--serif); font-size: 15px; }
-  .races .p { color: var(--blue); } .races .h { color: var(--red); }
+
+  /* factions & races */
+  .fac { display: flex; gap: 18px; align-items: center; }
+  .fac .crest { flex: none; width: 110px; }
+  .fac .crest svg { width: 100%; height: auto; filter: drop-shadow(0 6px 14px rgba(0,0,0,.6)); }
+  .fac .motto { font-family: var(--serif); color: var(--gold-light); font-size: 14.5px; margin-bottom: 6px; }
+  .fac p { margin: 0; color: var(--muted); font-size: 15.5px; }
+  .race { border-left: 3px solid var(--gold-dark); padding: 12px 16px; margin: 0 0 12px; background: rgba(0,0,0,.28); }
+  .race.p { border-left-color: var(--blue); } .race.h { border-left-color: var(--red); }
+  .race .rn { font-family: var(--serif); color: var(--gold-light); font-size: 17px; }
+  .race .passive { display: inline-block; font-family: var(--sans); font-size: 12px; font-weight: 600; color: var(--gold-light); border: 1px solid var(--gold-dark); border-radius: 3px; padding: 2px 8px; margin-left: 8px; background: rgba(0,0,0,.3); vertical-align: middle; }
+  .race p { margin: 6px 0 0; color: var(--muted); font-size: 15px; }
+  .col-h { font-family: var(--serif); font-size: 15px; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 10px; }
+
+  /* classes */
+  .cls { text-align: center; border-top: 4px solid var(--gold-dark); }
+  .cls.r { border-top-color: var(--red); } .cls.b { border-top-color: var(--blue); } .cls.y { border-top-color: var(--yellow); }
+  .cls .ico { width: 96px; margin: 0 auto 10px; }
+  .cls .ico svg { width: 100%; height: auto; filter: drop-shadow(0 4px 10px rgba(0,0,0,.6)); }
+  .cls p { margin: 0 0 8px; font-size: 15px; color: var(--muted); text-align: left; }
+  .pill { display: inline-block; font-size: 12px; font-weight: 600; border-radius: 999px; padding: 2px 10px; margin-left: 6px; vertical-align: middle; font-family: var(--sans); }
+  .pill.red { background: var(--red); color: #fff; } .pill.blue { background: var(--blue); color: #fff; } .pill.yellow { background: var(--yellow); color: #221a05; }
+
+  /* gear */
+  .gear { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; margin: 6px 0 4px; }
+  .gear .g { width: 96px; text-align: center; font-size: 13.5px; color: var(--muted); }
+  .gear .g svg { width: 80px; height: 80px; display: block; margin: 0 auto 6px; filter: drop-shadow(0 4px 10px rgba(0,0,0,.6)); }
+  .rarities { font-family: var(--serif); font-size: 16px; line-height: 2; text-align: center; }
 
   footer { border-top: 1px solid rgba(201,162,39,.25); margin-top: 20px; padding: 26px 0 44px; color: var(--muted); font-size: 13.5px; }
   footer .row { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-bottom: 10px; }
   footer a { color: var(--gold-light); text-decoration: none; } footer a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
-  @media (max-width: 860px) { .hero { grid-template-columns: 1fr; } .g3, .g4, .g2 { grid-template-columns: 1fr; } .crest { width: 110px; } }
+  @media (max-width: 860px) { .g2, .g3, .replay-grid { grid-template-columns: 1fr; } .fac { flex-direction: column; text-align: center; } .cls p { text-align: center; } }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 </style>
 </head>
@@ -119,71 +150,156 @@
     <span class="status">In development</span>
   </div>
 
+  <!-- ============ HERO ============ -->
   <section class="hero">
-    <div>
-      <div class="kicker">A Digital Outsider project · Compatible with Strava</div>
-      <h1>RUNCRAFT</h1>
-      <p class="lead">An afk-MMORPG that lives on top of your Strava runs. You run as usual. After every run your character replays it in a lovingly ironic homage to classic MMORPGs: skills trigger by distance, intervals and pace, loot drops, levels grow, and the innkeeper has opinions about your splits.</p>
-      <div class="chips">
-        <span class="chip">PWA · phone &amp; desktop</span>
-        <span class="chip">Nothing runs during your run</span>
-        <span class="chip">Your data is shown only to you</span>
-        <span class="chip">Built for serious runners</span>
-      </div>
-      <div class="btns">
-        <a class="btn primary" href="mailto:support@digitaloutsider.xyz?subject=Runcraft%20early%20access">Ask for early access</a>
-        <a class="btn" href="privacy.html">Privacy policy</a>
-      </div>
+    <div class="kicker">A Digital Outsider project · Compatible with Strava</div>
+    <h1>RUNCRAFT</h1>
+    <p class="lead">An afk-MMORPG that lives on top of your Strava runs. You run as usual. After every run your character replays it in a lovingly ironic homage to classic MMORPGs: skills trigger by distance, intervals and pace, loot drops, levels grow, and the innkeeper has opinions about your splits.</p>
+    <div class="chips">
+      <span class="chip">PWA · phone &amp; desktop</span>
+      <span class="chip">Nothing runs during your run</span>
+      <span class="chip">Your data is shown only to you</span>
+      <span class="chip">Built for serious runners</span>
     </div>
-    <div class="crests" aria-hidden="true">
-      <div class="crest">
-        <svg viewBox="0 0 100 120"><defs><linearGradient id="gp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a7bdc"/><stop offset="1" stop-color="#1a1510"/></linearGradient></defs><path d="M50 4 L92 18 V62 C92 90 70 108 50 116 C30 108 8 90 8 62 V18 Z" fill="url(#gp)" stroke="#c9a227" stroke-width="3"/><path d="M50 14 L82 25 V62 C82 84 66 98 50 105 C34 98 18 84 18 62 V25 Z" fill="none" stroke="#efd77a" stroke-width="1.2" opacity=".7"/><text x="50" y="76" text-anchor="middle" font-family="Cinzel,Georgia,serif" font-size="46" font-weight="700" fill="#efd77a">P</text></svg>
-        <div class="name">Paceliance</div><div class="motto">Hold the pace. Hold the line.</div>
-      </div>
-      <div class="crest">
-        <svg viewBox="0 0 100 120"><defs><linearGradient id="gh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c73a2c"/><stop offset="1" stop-color="#1a1510"/></linearGradient></defs><path d="M50 4 L92 18 V62 C92 90 70 108 50 116 C30 108 8 90 8 62 V18 Z" fill="url(#gh)" stroke="#c9a227" stroke-width="3"/><path d="M50 14 L82 25 V62 C82 84 66 98 50 105 C34 98 18 84 18 62 V25 Z" fill="none" stroke="#efd77a" stroke-width="1.2" opacity=".7"/><text x="50" y="76" text-anchor="middle" font-family="Cinzel,Georgia,serif" font-size="46" font-weight="700" fill="#efd77a">H</text></svg>
-        <div class="name">Hordistance</div><div class="motto">Distance is honor!</div>
-      </div>
+    <div class="btns">
+      <a class="btn primary" href="mailto:support@digitaloutsider.xyz?subject=Runcraft%20early%20access">Ask for early access</a>
+      <a class="btn" href="privacy.html">Privacy policy</a>
     </div>
   </section>
 
+  <!-- ============ CORE LOOP ============ -->
   <section>
     <h2>How it works</h2>
     <div class="rule"></div>
-    <div class="grid g4">
-      <div class="frame step"><span class="n">1</span><h3>You run</h3><p>With your watch, your laps, your Strava. Runcraft tracks nothing and never interrupts a run.</p></div>
-      <div class="frame step"><span class="n">2</span><h3>Strava hands over the run</h3><p>Once the activity lands in Strava, Runcraft picks it up: distance, splits, laps, cadence, pace.</p></div>
-      <div class="frame step"><span class="n">3</span><h3>Your character replays it</h3><p>A deterministic simulation: skills trigger by metres, intervals and pace, resource drains, crits stack.</p></div>
-      <div class="frame step"><span class="n">4</span><h3>Loot, XP, the Tavern</h3><p>Five minutes after the run: sort the drops, sell the junk, take a quest, equip the epic, go run again.</p></div>
+    <div class="flow">
+      <div class="frame step"><span class="n">1</span><h3>Run → Strava</h3></div><div class="arrow">➜</div>
+      <div class="frame step"><span class="n">2</span><h3>Webhook: new activity</h3></div><div class="arrow">➜</div>
+      <div class="frame step"><span class="n">3</span><h3>Fetch run details</h3></div><div class="arrow">➜</div>
+      <div class="frame step"><span class="n">4</span><h3>Pick character and workout type</h3></div><div class="arrow">➜</div>
+      <div class="frame step"><span class="n">5</span><h3>Simulation (seed = run id)</h3></div><div class="arrow">➜</div>
+      <div class="frame step"><span class="n">6</span><h3>Animation + log: triggers, drops, XP</h3></div><div class="arrow">➜</div>
+      <div class="frame step"><span class="n">7</span><h3>Loot, Tavern, quests, prep</h3></div>
+    </div>
+    <p class="muted" style="text-align:center;margin-top:22px">One cycle = one run. All game actions cluster around two moments: right after a run and right before the next one. In between, the game asks nothing of you.</p>
+  </section>
+
+  <!-- ============ REPLAY ============ -->
+  <section>
+    <h2>A run, replayed</h2>
+    <div class="rule"></div>
+    <div class="replay-grid">
+      <div>
+        <div id="replay-mount"></div>
+        <p class="muted" style="font-size:14px;margin-top:8px">A stylised location map: the dot runs along the trail, events pop on the map and print into the combat-style log beneath it. In the game this takes 30–60 seconds and can be skipped.</p>
+      </div>
+      <div class="parch">
+        <h3>What the engine does</h3>
+        <ul class="clean">
+          <li><b>Pure function.</b> (run, character, config, seed) → result. No network, no database inside.</li>
+          <li><b>Deterministic.</b> The seed is the Strava activity id; the config version is stored with the run. Replaying gives the same result.</li>
+          <li><b>Workout type auto-detect.</b> Laps, splits and Strava's workout tag propose "intervals", "tempo" or "base"; you confirm with one tap.</li>
+          <li><b>Regular runs still count.</b> 1 km = 1 XP, half the drop chance, no resource spent.</li>
+          <li><b>Resource and pauses.</b> Rage, Mana or Energy is full at the start; every trigger costs some. Hit zero and the character catches breath for 500 simulated metres.</li>
+        </ul>
+      </div>
     </div>
   </section>
 
+  <!-- ============ FACTIONS ============ -->
   <section>
+    <h2>Two factions</h2>
+    <div class="rule"></div>
     <div class="grid g2">
-      <div>
-        <h2>Three classes, three ways to run</h2>
-        <div class="rule"></div>
-        <div class="grid">
-          <div class="frame cls red"><h3>Runrior <span class="pill red">Rage</span></h3><p><b>Charge</b> triggers every few hundred metres of distance, any pace. Long runs and easy miles are its home.</p></div>
-          <div class="frame cls blue"><h3>Runage <span class="pill blue">Mana</span></h3><p><b>Blink</b> triggers inside fast intervals: watch laps or auto-detected repeats. The more reps you hold, the more it blinks.</p></div>
-          <div class="frame cls yellow"><h3>Rungue <span class="pill yellow">Energy</span></h3><p><b>Sprint</b> triggers on stretches faster than a pace threshold. Tempo runs, races, negative splits.</p></div>
+      <div class="frame fac">
+        <div class="crest" aria-hidden="true"><svg viewBox="0 0 100 120"><defs><linearGradient id="gp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a7bdc"/><stop offset="1" stop-color="#1a1510"/></linearGradient></defs><path d="M50 4 L92 18 V62 C92 90 70 108 50 116 C30 108 8 90 8 62 V18 Z" fill="url(#gp)" stroke="#c9a227" stroke-width="3"/><path d="M50 14 L82 25 V62 C82 84 66 98 50 105 C34 98 18 84 18 62 V25 Z" fill="none" stroke="#efd77a" stroke-width="1.2" opacity=".7"/><text x="50" y="76" text-anchor="middle" font-family="Cinzel,Georgia,serif" font-size="46" font-weight="700" fill="#efd77a">P</text></svg></div>
+        <div>
+          <h3 class="blue" style="margin-bottom:2px">Paceliance</h3>
+          <div class="motto">Hold the pace. Hold the line.</div>
+          <p>Order, even splits and a training plan taped to the fridge. The Paceliance believes a run is a promise you keep to your watch.</p>
         </div>
       </div>
+      <div class="frame fac">
+        <div class="crest" aria-hidden="true"><svg viewBox="0 0 100 120"><defs><linearGradient id="gh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c73a2c"/><stop offset="1" stop-color="#1a1510"/></linearGradient></defs><path d="M50 4 L92 18 V62 C92 90 70 108 50 116 C30 108 8 90 8 62 V18 Z" fill="url(#gh)" stroke="#c9a227" stroke-width="3"/><path d="M50 14 L82 25 V62 C82 84 66 98 50 105 C34 98 18 84 18 62 V25 Z" fill="none" stroke="#efd77a" stroke-width="1.2" opacity=".7"/><text x="50" y="76" text-anchor="middle" font-family="Cinzel,Georgia,serif" font-size="46" font-weight="700" fill="#efd77a">H</text></svg></div>
+        <div>
+          <h3 class="red" style="margin-bottom:2px">Hordistance</h3>
+          <div class="motto">Distance is honor!</div>
+          <p>Mud, hills and long runs that end somewhere else. The Hordistance believes the only bad run is the one that fits on a treadmill.</p>
+        </div>
+      </div>
+    </div>
+    <p class="muted" style="margin-top:16px;font-size:15px">Faction is chosen per character, and characters per account are unlimited. The faction level is the sum of the levels of everyone who runs under its banner.</p>
+  </section>
+
+  <!-- ============ RACES ============ -->
+  <section>
+    <h2>Six races, six passives</h2>
+    <div class="rule"></div>
+    <div class="grid g2">
       <div>
-        <h2>A run, replayed</h2>
-        <div class="rule"></div>
-        <pre class="log"><span class="km">[2.4 km]</span> Charge! Rage 120/150.
-<span class="km">[2.4 km]</span> You receive: <span class="poor">[Worn Sneakers]</span> (Poor).
-<span class="km">[5.0 km]</span> Crit ×1: one more kilometre past the fifth.
-<span class="km">[6.1 km]</span> Rage depleted. Runbert catches his breath… (500 m)
-<span class="km">[6.6 km]</span> Rage restored!
-<span class="km">[9.8 km]</span> You receive: <span class="rare">[Duskrunner's Gaiters]</span> (Rare)!
-<span class="km">[10.0 km]</span> Run complete. +43 XP. Level 3!</pre>
-        <p class="muted" style="font-size:14px;margin-top:10px">Six races with passives for cadence, time of day and coin: <span class="races"><span class="p">Go-nomes</span><span class="p">Evening elves</span><span class="p">Runmans</span><span class="h">Runks</span><span class="h">Un-dawn</span><span class="h">Go-go-blins</span></span></p>
+        <div class="col-h blue">Paceliance</div>
+        <div class="race p"><div class="rn">Go-nomes <span class="passive">Quick Feet</span></div><p>Short legs, absurd cadence. A Go-nome takes three steps where others take two and finds loot under every one of them. Run at 170+ steps per minute and the drop chance rises by 10 %.</p></div>
+        <div class="race p"><div class="rn">Evening elves <span class="passive">Dusk Runner</span></div><p>They swear the evening air is thinner. Nobody has proven it, but between 18:00 and 23:00 an Evening elf's pockets fill faster: +10 % drop chance.</p></div>
+        <div class="race p"><div class="rn">Runmans <span class="passive">Diplomat's Purse</span></div><p>Humans can't jump higher or run faster, but they can negotiate. Every quest pays 15 % more coin, because someone had to talk to the innkeeper.</p></div>
+      </div>
+      <div>
+        <div class="col-h red">Hordistance</div>
+        <div class="race h"><div class="rn">Runks <span class="passive">Heavy Stride</span></div><p>Fewer steps, heavier ones. Runks pound the trail at 160 spm or below and the ground gives up its treasure out of sheer respect: +10 % drop chance.</p></div>
+        <div class="race h"><div class="rn">Un-dawn <span class="passive">Before the Sun</span></div><p>They don't need sleep, or so they claim. Start a run between 05:00 and 10:00 and the Un-dawn's loot luck rises by 10 %; the rest of the day they are somewhat grumpy.</p></div>
+        <div class="race h"><div class="rn">Go-go-blins <span class="passive">Haggler</span></div><p>Everything is for sale, especially the thing you just found. Go-go-blins get 15 % more coin for whatever they sell to the innkeeper.</p></div>
       </div>
     </div>
   </section>
 
+  <!-- ============ CLASSES ============ -->
+  <section>
+    <h2>Three classes, three ways to run</h2>
+    <div class="rule"></div>
+    <div class="grid g3">
+      <div class="frame cls r">
+        <div class="ico" aria-hidden="true"><svg viewBox="0 0 64 64"><defs><radialGradient id="gr-red" cx="50%" cy="40%" r="60%"><stop offset="0" stop-color="#e0503f"/><stop offset="1" stop-color="#6b1a12"/></radialGradient></defs><circle cx="32" cy="32" r="29" fill="#1a1510" stroke="#7a5c12" stroke-width="2"/><circle cx="32" cy="32" r="25.5" fill="none" stroke="#c9a227" stroke-width="1" opacity=".75"/><circle cx="32" cy="32" r="23" fill="url(#gr-red)"/><circle cx="32" cy="32" r="16" fill="none" stroke="#efd77a" stroke-width="1.2" stroke-dasharray="3 3" opacity=".55"/><g stroke="#efd77a" stroke-width="3" stroke-linecap="round"><line x1="21" y1="43" x2="43" y2="21"/><line x1="43" y1="43" x2="21" y2="21"/></g><g stroke="#c9a227" stroke-width="3.5" stroke-linecap="round"><line x1="18" y1="40" x2="24" y2="46"/><line x1="46" y1="40" x2="40" y2="46"/></g><g fill="#fff3c4"><polygon points="43,21 48,16 45,24"/><polygon points="21,21 16,16 19,24"/></g></svg></div>
+        <h3>Runrior <span class="pill red">Rage</span></h3>
+        <p><b>Charge</b> fires every few hundred metres of distance, any pace: 200 m at level 1, about 1 km at level 60. Long runs and easy miles are its home; the further you go, the angrier it gets.</p>
+        <p class="muted" style="font-size:14px"><b>Favourite style:</b> base running, long and easy.</p>
+      </div>
+      <div class="frame cls b">
+        <div class="ico" aria-hidden="true"><svg viewBox="0 0 64 64"><defs><radialGradient id="gr-blue" cx="50%" cy="40%" r="60%"><stop offset="0" stop-color="#5a94f0"/><stop offset="1" stop-color="#14306b"/></radialGradient></defs><circle cx="32" cy="32" r="29" fill="#1a1510" stroke="#7a5c12" stroke-width="2"/><circle cx="32" cy="32" r="25.5" fill="none" stroke="#c9a227" stroke-width="1" opacity=".75"/><circle cx="32" cy="32" r="23" fill="url(#gr-blue)"/><path d="M24 16 L26.5 26.5 L37 30 L26.5 33.5 L24 44 L21.5 33.5 L11 30 L21.5 26.5 Z" fill="#dff1ff" opacity=".3"/><path d="M34 12 L37.5 27 L52 32 L37.5 37 L34 52 L30.5 37 L16 32 L30.5 27 Z" fill="#eaf6ff"/><circle cx="34" cy="32" r="3.2" fill="#ffffff"/><circle cx="34" cy="32" r="7" fill="none" stroke="#ffffff" stroke-width="1" opacity=".5"/></svg></div>
+        <h3>Runage <span class="pill blue">Mana</span></h3>
+        <p><b>Blink</b> fires inside fast intervals: watch laps or auto-detected repeats, 100 m apart at level 1 and 500 m at 60, pace no slower than the threshold. Hold the pace across more reps and the mage keeps vanishing.</p>
+        <p class="muted" style="font-size:14px"><b>Favourite style:</b> intervals.</p>
+      </div>
+      <div class="frame cls y">
+        <div class="ico" aria-hidden="true"><svg viewBox="0 0 64 64"><defs><radialGradient id="gr-yel" cx="50%" cy="40%" r="60%"><stop offset="0" stop-color="#f3cc4a"/><stop offset="1" stop-color="#8a6410"/></radialGradient></defs><circle cx="32" cy="32" r="29" fill="#1a1510" stroke="#7a5c12" stroke-width="2"/><circle cx="32" cy="32" r="25.5" fill="none" stroke="#c9a227" stroke-width="1" opacity=".75"/><circle cx="32" cy="32" r="23" fill="url(#gr-yel)"/><path d="M45 17 L49 21 L31 43 L25 45 L27 39 Z" fill="#2a2016" stroke="#fff3c4" stroke-width="1.5" stroke-linejoin="round"/><line x1="23" y1="37" x2="33" y2="47" stroke="#fff3c4" stroke-width="3" stroke-linecap="round"/><line x1="27" y1="43" x2="19" y2="51" stroke="#2a2016" stroke-width="4.5" stroke-linecap="round"/><g stroke="#2a2016" stroke-width="2.5" stroke-linecap="round" opacity=".85"><line x1="12" y1="22" x2="24" y2="22"/><line x1="10" y1="28" x2="19" y2="28"/><line x1="14" y1="34" x2="20" y2="34"/></g></svg></div>
+        <h3>Rungue <span class="pill yellow">Energy</span></h3>
+        <p><b>Sprint</b> fires on stretches faster than the pace threshold: 150 m apart at level 1, 750 m at 60, threshold 5:30 → 4:15 min/km. Tempo runs, races, negative splits: it steals loot the moment you dip under the threshold.</p>
+        <p class="muted" style="font-size:14px"><b>Favourite style:</b> tempo running.</p>
+      </div>
+    </div>
+    <p class="muted" style="margin-top:16px;font-size:15px">Crits stack within a run and multiply the drop chance; three or more runs a week carry a stack into the next one. Every trigger drinks a little Rage, Mana or Energy; run out and the character catches breath for 500 simulated metres.</p>
+  </section>
+
+  <!-- ============ LOOT ============ -->
+  <section>
+    <h2>Loot and gear</h2>
+    <div class="rule"></div>
+    <div class="grid g2">
+      <div class="frame">
+        <h3 style="text-align:center">Three slots</h3>
+        <div class="gear">
+          <div class="g"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="3" y="3" width="58" height="58" rx="8" fill="#1a1510" stroke="#7a5c12" stroke-width="2"/><rect x="6.5" y="6.5" width="51" height="51" rx="6" fill="none" stroke="#c9a227" stroke-width="1" opacity=".7"/><path d="M16 46 C13 27 22 13 32 13 C42 13 51 27 48 46 L48 51 L16 51 Z" fill="#3a3024" stroke="#efd77a" stroke-width="2" stroke-linejoin="round"/><ellipse cx="32" cy="37" rx="9" ry="10.5" fill="#0f0c08"/><path d="M18 27 C23 23.5 41 23.5 46 27" stroke="#c73a2c" stroke-width="4.5" fill="none" stroke-linecap="round"/></svg>Head</div>
+          <div class="g"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="3" y="3" width="58" height="58" rx="8" fill="#1a1510" stroke="#7a5c12" stroke-width="2"/><rect x="6.5" y="6.5" width="51" height="51" rx="6" fill="none" stroke="#c9a227" stroke-width="1" opacity=".7"/><path d="M17 17 L27 12 L32 17.5 L37 12 L47 17 L45 51 L19 51 Z" fill="#3a3024" stroke="#efd77a" stroke-width="2" stroke-linejoin="round"/><path d="M22 20 L42 20" stroke="#efd77a" stroke-width="1.2" opacity=".5"/><rect x="23.5" y="27" width="17" height="12.5" rx="1.5" fill="#efe6d2"/><text x="32" y="36.6" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-weight="700" font-size="9.5" fill="#2a2016">42</text><circle cx="26" cy="29" r="1" fill="#c73a2c"/><circle cx="38" cy="29" r="1" fill="#c73a2c"/></svg>Chest</div>
+          <div class="g"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="3" y="3" width="58" height="58" rx="8" fill="#1a1510" stroke="#7a5c12" stroke-width="2"/><rect x="6.5" y="6.5" width="51" height="51" rx="6" fill="none" stroke="#c9a227" stroke-width="1" opacity=".7"/><path d="M23 15 L35 15 L37 35 L51 41 L51 48 L21 48 Q17 48 17 44 L17 40 L23 37 Z" fill="#3a3024" stroke="#efd77a" stroke-width="2" stroke-linejoin="round"/><g stroke="#efd77a" stroke-width="1.5" stroke-linecap="round"><path d="M25.5 21 L33 21"/><path d="M26 26 L33.5 26"/><path d="M26.5 31 L34 31"/></g><g fill="#efd77a"><path d="M15 30 C7 26 7 18 13 13 C12.5 21 14.5 25.5 21 29.5 Z"/><path d="M20 25.5 C13.5 21.5 13.5 14 19.5 10 C18.5 17.5 20 21.5 26 25 Z" opacity=".7"/></g></svg>Feet</div>
+        </div>
+        <p class="muted" style="margin:6px 0 0;font-size:14.5px;text-align:center">A hood with a sweatband, a breastplate with a race bib, winged boots. Sets of three, class restrictions, seven stats to roll.</p>
+      </div>
+      <div class="frame">
+        <h3 style="text-align:center">Six rarities</h3>
+        <div class="rarities"><span class="poor">Poor</span> · <span class="common">Common</span> · <span class="uncommon">Uncommon</span><br><span class="rare">Rare</span> · <span class="epic">Epic</span> · <span class="legendary">Legendary</span></div>
+        <p class="muted" style="margin:6px 0 0;font-size:14.5px;text-align:center">Grey junk sells for coin and comes with the best jokes. Epics and legendaries drop only in the harder locations or from unusual quests. The Tavern sells the guaranteed stuff; the trail drops the random stuff.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SERIOUS + PRIVACY ============ -->
   <section>
     <div class="grid g2">
       <div class="parch">
@@ -208,6 +324,7 @@
     </div>
   </section>
 
+  <!-- ============ STATUS ============ -->
   <section>
     <h2>Where it is now</h2>
     <div class="rule"></div>
@@ -229,6 +346,74 @@
     <div>Runcraft is an independent project, not affiliated with or endorsed by Strava, Inc. or Blizzard Entertainment. Faction, race, class and location names are parody. Activity data is used under Strava's API Agreement and displayed only to the athlete it belongs to.</div>
   </footer>
 </div>
+
+<script>
+(function () {
+  var esc = function (s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); };
+
+  /* run replay: map + synchronized combat-style log (same component as in the design deck) */
+  function mountReplay(root, o) {
+    var PATH = "M40 200 C 60 120, 120 90, 170 110 S 250 170, 300 130 S 360 70, 370 40";
+    var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    root.innerHTML =
+      '<div class="rp-map"><svg viewBox="0 0 400 240" aria-label="run replay">' +
+      '<defs><filter id="rpglow"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>' +
+      '<g opacity=".35" fill="#7c9a5a"><ellipse cx="70" cy="60" rx="34" ry="22"/><ellipse cx="330" cy="70" rx="40" ry="24"/><ellipse cx="300" cy="190" rx="46" ry="26"/><ellipse cx="90" cy="180" rx="38" ry="22"/></g>' +
+      '<path class="rp-path" d="' + PATH + '" fill="none" stroke="#c9a227" stroke-width="3" stroke-dasharray="6 5" opacity=".8"/>' +
+      '<g fill="#efd77a" font-family="Georgia,serif" font-size="11"><text x="28" y="222">' + esc(o.start) + '</text><text x="340" y="30">' + esc(o.finish) + '</text></g>' +
+      '<g class="rp-marks"></g>' +
+      '<text class="rp-zzz" fill="#d8cfb8" font-size="13" font-style="italic" opacity="0">zzz</text>' +
+      '<circle class="rp-dot" r="6" fill="#ff8c3a" filter="url(#rpglow)" cx="40" cy="200"/>' +
+      '</svg></div>' +
+      '<div class="rp-log" aria-live="polite"></div>' +
+      '<div class="rp-bar"><span class="rp-pos">0.0 km</span><button type="button" class="rp-btn">' + esc(o.replay) + '</button></div>';
+    var svg = root.querySelector("svg"), path = svg.querySelector(".rp-path"), dot = svg.querySelector(".rp-dot"),
+        marks = svg.querySelector(".rp-marks"), zzz = svg.querySelector(".rp-zzz"), log = root.querySelector(".rp-log"), pos = root.querySelector(".rp-pos");
+    var NS = "http://www.w3.org/2000/svg", len = path.getTotalLength(), total = o.totalKm || 10;
+    var pt = function (km) { return path.getPointAtLength(Math.max(0, Math.min(1, km / total)) * len); };
+    var msPerKm = o.msPerKm || 1100, pauseMs = o.pauseMs || 1500, endHold = o.endHold || 3500;
+    var pauseEv = null; o.events.forEach(function (e) { if (!pauseEv && e.kind === "pause") pauseEv = e; });
+    var pauseAt = pauseEv ? pauseEv.km * msPerKm : Infinity;
+    var kmAt = function (ms) { return ms < pauseAt ? ms / msPerKm : ms < pauseAt + pauseMs ? pauseEv.km : (ms - pauseMs) / msPerKm; };
+    var runMs = total * msPerKm + (pauseEv ? pauseMs : 0);
+    var fmt = function (e) { var s = esc(e.text); if (e.color) s = s.replace(/\[([^\]]+)\]/g, '<span style="color:' + e.color + '">[$1]</span>'); return s; };
+    var fired, raf = null, t0 = null;
+    function addLine(e) { var d = document.createElement("div"); d.className = "rp-ln rp-new"; d.innerHTML = '<span class="km">[' + e.km.toFixed(1) + ' km]</span> ' + fmt(e); log.appendChild(d); log.scrollTop = log.scrollHeight; setTimeout(function () { d.classList.remove("rp-new"); }, 900); }
+    function mark(e) { var p = pt(e.km);
+      if (e.kind === "drop") { var t = document.createElementNS(NS, "text"); t.setAttribute("x", p.x - 5); t.setAttribute("y", p.y - 10); t.setAttribute("fill", e.color || "#e2b62c"); t.setAttribute("font-size", "15"); t.setAttribute("class", "rp-pop"); t.textContent = "✦"; marks.appendChild(t); }
+      else if (e.kind === "crit" || e.kind === "trigger") { var c = document.createElementNS(NS, "circle"); c.setAttribute("cx", p.x); c.setAttribute("cy", p.y); c.setAttribute("r", "5"); c.setAttribute("fill", "none"); c.setAttribute("stroke", e.kind === "crit" ? "#efd77a" : "#ff8c3a"); c.setAttribute("stroke-width", e.kind === "crit" ? "2.5" : "1.5"); c.setAttribute("class", "rp-ring"); marks.appendChild(c); setTimeout(function () { c.remove(); }, 950); }
+      else if (e.kind === "pause") { zzz.setAttribute("x", p.x + 9); zzz.setAttribute("y", p.y - 9); zzz.setAttribute("opacity", "1"); }
+      else if (e.kind === "resume") { zzz.setAttribute("opacity", "0"); }
+    }
+    function reset() { fired = {}; marks.innerHTML = ""; log.innerHTML = ""; zzz.setAttribute("opacity", "0"); }
+    function place(km) { var p = pt(km); dot.setAttribute("cx", p.x); dot.setAttribute("cy", p.y); pos.textContent = km.toFixed(1) + " km"; }
+    function frame(ts) { if (t0 === null) t0 = ts; var ms = ts - t0; var km = kmAt(Math.min(ms, runMs)); place(km);
+      o.events.forEach(function (e, i) { if (!fired[i] && km >= e.km - 1e-9) { fired[i] = true; addLine(e); mark(e); } });
+      if (ms < runMs + endHold) raf = requestAnimationFrame(frame); else start(); }
+    function start() { if (raf) cancelAnimationFrame(raf); reset(); t0 = null;
+      if (reduced) { place(total); o.events.forEach(function (e) { addLine(e); if (e.kind !== "pause") mark(e); }); return; }
+      raf = requestAnimationFrame(frame); }
+    root.querySelector(".rp-btn").onclick = start;
+    start();
+  }
+
+  mountReplay(document.getElementById("replay-mount"), {
+    start: "start", finish: "finish", replay: "Replay ↺", totalKm: 10,
+    events: [
+      { km: 1.2, kind: "trigger", text: "Charge! Rage 140/150." },
+      { km: 2.4, kind: "trigger", text: "Charge! Rage 120/150." },
+      { km: 2.4, kind: "drop", color: "#9a9a9a", text: "You receive: [Worn Sneakers] (Poor)." },
+      { km: 3.8, kind: "drop", color: "#e2b62c", text: "You receive: 4 coins." },
+      { km: 5.0, kind: "crit", text: "Crit ×1: one more kilometre past the fifth." },
+      { km: 6.1, kind: "pause", text: "Rage depleted. Runbert catches his breath… (500 m)" },
+      { km: 6.6, kind: "resume", text: "Rage restored!" },
+      { km: 7.9, kind: "trigger", text: "Charge! Rage 132/150." },
+      { km: 9.8, kind: "drop", color: "#3b8be6", text: "You receive: [Duskrunner's Gaiters] (Rare)!" },
+      { km: 10.0, kind: "end", text: "Run complete. +43 XP. Level 3!" }
+    ]
+  });
+})();
+</script>
 <script data-goatcounter="https://digital-outsider.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
