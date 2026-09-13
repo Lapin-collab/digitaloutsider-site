@@ -168,7 +168,8 @@
   .talent .gi { display: block; } .talent .gi svg { width: 72px; height: 72px; transition: transform .15s, filter .15s; }
   .talent:hover .gi svg, .talent.open .gi svg, .talent:focus-visible .gi svg { transform: scale(1.06); filter: drop-shadow(0 0 10px rgba(239,215,122,.75)); }
   .talent .rank { position: absolute; left: 50%; top: 58px; transform: translateX(16px); font-size: 11px; font-weight: 700; background: #120e0a; border: 1px solid var(--gold); color: var(--uncommon); padding: 0 4px; border-radius: 3px; }
-  .talent .name { font-family: var(--serif); font-size: 13px; line-height: 1.2; color: var(--gold-light); margin-top: 8px; }
+  .talent .name { font-family: var(--serif); font-size: 13px; line-height: 1.2; color: var(--gold-light); margin-top: 8px; display: inline-block; padding: 2px 6px; border-radius: 4px; background: rgba(21,17,13,.92); text-shadow: 0 1px 2px #000; position: relative; z-index: 2; }
+  .tree-lines { z-index: 0; } .tree-grid { z-index: 1; }
   .talent-tip { position: absolute; z-index: 5; background: rgba(8,6,4,.96); border: 1px solid var(--gold); padding: 10px 12px; font-size: 14px; color: #d8cfb8; box-shadow: 0 8px 30px rgba(0,0,0,.6); border-radius: 3px; pointer-events: none; }
   .talent-tip b { display: block; font-family: var(--serif); color: var(--gold-light); margin-bottom: 4px; }
   .tree .again { position: absolute; transform: translate(-50%,-50%); text-align: center; font-family: var(--serif); font-size: 11px; color: var(--muted); background: #15110d; padding: 4px 2px; border-radius: 8px; }
@@ -525,14 +526,14 @@ function mountTree(tree){
     var W=body.clientWidth,H=body.clientHeight; if(!W||!H) return; if(!force&&W===lastW&&H===lastH&&svg.childElementCount>1) return; lastW=W; lastH=H;
     svg.setAttribute("viewBox","0 0 "+W+" "+H);
     svg.innerHTML='<defs><marker id="'+mid+'-ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#c9a227"/></marker></defs>';
-    nodes.forEach(function(n){ if(n.dataset.loop) return; (n.dataset.from||"").split(",").filter(Boolean).forEach(function(f){var s=rect(byId[f]),t=rect(n);
+    nodes.forEach(function(n){ if(n.dataset.loop) return; (n.dataset.from||"").split(",").filter(Boolean).forEach(function(f){var s=rect(byId[f]),t=rect(n),sb=byId[f].getBoundingClientRect().bottom-body.getBoundingClientRect().top+3;
       if(Math.abs(s.cy-t.cy)<8){var dir=t.cx>s.cx?1:-1; add("M"+(s.cx+dir*s.w/2)+" "+s.cy+" L"+(t.cx-dir*t.w/2)+" "+t.cy);}
-      else if(Math.abs(s.cx-t.cx)<8){add("M"+s.cx+" "+(s.y+s.h)+" L"+t.cx+" "+t.y);}
-      else{var my=(s.y+s.h+t.y)/2; add("M"+s.cx+" "+(s.y+s.h)+" L"+s.cx+" "+my+" L"+t.cx+" "+my+" L"+t.cx+" "+t.y);}
+      else if(Math.abs(s.cx-t.cx)<8){add("M"+s.cx+" "+sb+" L"+t.cx+" "+t.y);}
+      else{var my=(sb+t.y)/2; add("M"+s.cx+" "+sb+" L"+s.cx+" "+my+" L"+t.cx+" "+my+" L"+t.cx+" "+t.y);}
     });});
     var loop=grid.querySelector(".talent[data-loop]");
     if(loop){var s=rect(byId[loop.dataset.from]),r=rect(loop),t=rect(byId[loop.dataset.loop]);
-      add("M"+(s.cx+s.w/2)+" "+s.cy+" L"+r.cx+" "+s.cy+" L"+r.cx+" "+(r.y+r.h+4),true);
+      var rb=loop.getBoundingClientRect().bottom-body.getBoundingClientRect().top+3; add("M"+(s.cx+s.w/2)+" "+s.cy+" L"+r.cx+" "+s.cy+" L"+r.cx+" "+rb,true);
       add("M"+r.cx+" "+(r.y-2)+" L"+r.cx+" "+t.cy+" L"+(t.cx+t.w/2+6)+" "+t.cy,true);}
   }
   function show(n){tip.innerHTML="<b>"+n.querySelector(".name").textContent+"</b>"+(n.dataset.tip||""); tip.hidden=false; var r=rect(n),W=body.clientWidth,w=Math.min(250,W-8); tip.style.width=w+"px"; var left=Math.max(4,Math.min(W-w-4,r.cx-w/2)); tip.style.left=left+"px"; tip.style.top=(r.y+r.h+34)+"px";}
