@@ -38,8 +38,9 @@
       radial-gradient(900px 500px at 110% 110%, rgba(201,162,39,.08), transparent 60%),
       linear-gradient(180deg, #1a1510 0%, #15110d 60%, #100d09 100%);
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
-  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 22px; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 clamp(22px, 6vw, 96px); }
   h1, h2, h3 { font-family: var(--serif); letter-spacing: .02em; color: var(--gold-light); text-shadow: 0 1px 0 #3a2a05; }
   h1 { font-size: clamp(48px, 10vw, 104px); margin: 0 0 .1em; line-height: 1; text-shadow: 0 2px 0 #3a2a05, 0 0 30px rgba(201,162,39,.35); }
   h2 { font-size: clamp(24px, 3vw, 36px); margin: 0 0 .4em; }
